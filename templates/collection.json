@@ -1,0 +1,65 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "collection-template",
+      "blocks": {
+        "0cca9239-e010-414f-ba0e-1cec960de0c1": {
+          "type": "banner",
+          "settings": {
+            "widget_title": "Banner",
+            "banner_image": "shopify://shop_images/about-img-2-1_efd25995-c506-468b-b43e-968868da4456.png",
+            "banner_image_url": ""
+          }
+        },
+        "4372d354-c3e4-4754-ab0d-5e98e16d8318": {
+          "type": "menu",
+          "settings": {
+            "widget_title": "Custom Menu",
+            "menu_handle": "main-menu"
+          }
+        }
+      },
+      "block_order": [
+        "0cca9239-e010-414f-ba0e-1cec960de0c1",
+        "4372d354-c3e4-4754-ab0d-5e98e16d8318"
+      ],
+      "settings": {
+        "container_width": "container",
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "collection_sidebar": "leftColumn",
+        "shopbar_enable": true,
+        "show_ajax_paginate": true,
+        "ajax_show_title_handle": "Show | per page",
+        "filter_btn_text": "Filters",
+        "tab_bar_enable": true,
+        "showing_product_counter_enable": true,
+        "showing_title_handle": "Showing | of | result",
+        "collection_description": false,
+        "collection__title": true,
+        "collection__description_text": true,
+        "textAlign": "center",
+        "shop_page_title_image_enable": false,
+        "custom_collection_banner": "each_collection_automate",
+        "products_limit_handle": 6,
+        "deault_active_grid_column": "6",
+        "product_column_md": "6",
+        "product_column_xs": "6",
+        "tm_small_mobile_col": "6",
+        "product_style": "style1"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
