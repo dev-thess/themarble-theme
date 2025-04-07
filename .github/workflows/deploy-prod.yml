@@ -23,17 +23,15 @@ jobs:
           SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
         run: |
           echo "Uploading theme to Shopify..."
-          
-          # Create JSON payload file
-          cat > theme_payload.json << EOF
-{
-  "theme": {
-    "name": "CI Deploy - ${GITHUB_SHA}",
-    "role": "unpublished",
-    "src": "data:application/zip;base64,$(base64 -w 0 theme.zip)"
-  }
-}
-EOF
+
+          # Create JSON payload file with proper escaping
+          echo '{
+            "theme": {
+              "name": "CI Deploy - '"${GITHUB_SHA}"'",
+              "role": "unpublished",
+              "src": "data:application/zip;base64,'"$(base64 -w 0 theme.zip)"'"
+            }
+          }' > theme_payload.json
 
           # Use the JSON file in the curl request
           curl -X POST "https://${SHOPIFY_STORE_DOMAIN}/admin/api/2023-10/themes.json" \
