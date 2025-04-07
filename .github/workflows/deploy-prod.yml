@@ -13,19 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Debug environment
-        run: |
-          echo "GitHub SHA: ${GITHUB_SHA}"
-          echo "Token length: ${#SHOPIFY_ADMIN_TOKEN}"
-          date
-        env:
-          SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
-
       - name: Zip theme folder
         run: |
-          zip -r theme.zip * .[^.]* -x '*.git*' -x '.github/*'
-          ls -la theme.zip
-          echo "Theme ZIP size: $(du -h theme.zip | cut -f1)"
+          zip -r theme.zip * .[^.]* -x '*.git*'
 
       - name: Upload theme via Admin API
         env:
@@ -34,67 +24,16 @@ jobs:
           echo "Uploading theme to Shopify..."
 
           # Create JSON payload file with proper escaping
-          cat > theme_payload.json << EOF
-          {
+          echo '{
             "theme": {
-              "name": "Marble Brew Theme - $(date '+%Y-%m-%d %H:%M:%S') - ${GITHUB_SHA:0:7}",
+              "name": "CI Deploy - '"${GITHUB_SHA}"'",
               "role": "unpublished",
-              "src": "data:application/zip;base64,$(base64 -w 0 theme.zip)"
+              "src": "data:application/zip;base64,'"$(base64 -w 0 theme.zip)"'"
             }
-          }
-          EOF
+          }' > theme_payload.json
 
-          # Verify payload size
-          echo "Payload size: $(wc -c < theme_payload.json) bytes"
-
-          # Display very short excerpts of the beginning/end
-          echo "Payload beginning: $(head -c 100 theme_payload.json)..."
-          echo "Payload ending: ...$(tail -c 100 theme_payload.json)"
-
-          # Make the API request
-          echo "Making API request to https://nk7dke-sj.myshopify.com/admin/api/2023-10/themes.json"
-          RESPONSE=$(curl -s -X POST \
-            "https://nk7dke-sj.myshopify.com/admin/api/2023-10/themes.json" \
+          # Use the JSON file in the curl request
+          curl -X POST "https://nk7dke-sj.myshopify.com/admin/api/2023-10/themes.json" \
             -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data-binary @theme_payload.json \
-            -o response.json -w "%{http_code}")
-
-          # Check HTTP status
-          HTTP_CODE=$RESPONSE
-          echo "HTTP status code: $HTTP_CODE"
-
-          # Print response if available
-          if [ -f response.json ]; then
-            echo "Response: $(cat response.json)"
-            
-            # Extract theme ID using a simpler method
-            if [ $HTTP_CODE -eq 201 ] || [ $HTTP_CODE -eq 200 ]; then
-              THEME_ID=$(grep -o '"id":[0-9]*' response.json | head -1 | grep -o '[0-9]*')
-              echo "Extracted theme ID: $THEME_ID"
-              
-              if [ -n "$THEME_ID" ]; then
-                echo "Theme created with ID: $THEME_ID"
-                
-                # Force theme role update
-                echo "Setting theme role to ensure visibility..."
-                curl -X PUT \
-                  "https://nk7dke-sj.myshopify.com/admin/api/2023-10/themes/$THEME_ID.json" \
-                  -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
-                  -H "Content-Type: application/json" \
-                  -d '{"theme":{"role":"unpublished"}}' \
-                  -v
-                
-                echo "✅ Theme deployment complete!"
-              else
-                echo "❌ Failed to extract theme ID from response"
-                exit 1
-              fi
-            else
-              echo "❌ API request failed with status $HTTP_CODE"
-              exit 1
-            fi
-          else
-            echo "❌ No response received from API"
-            exit 1
-          fi
+            --data-binary @theme_payload.json
