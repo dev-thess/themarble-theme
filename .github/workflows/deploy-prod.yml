@@ -1,0 +1,24 @@
+name: Deploy Theme to Prod using Admin API
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Zip theme folder
+        run: zip -r theme.zip * .[^.]* -x '*.git*'
+
+      - name: Deploy via Admin API
+        uses: uesteibar/shopify-upload-theme@v1.0.4
+        with:
+          store: themarble.coffee
+          password: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+          theme_id: ${{ secrets.SHOPIFY_PROD_THEME_ID }}
+          zip_file: theme.zip

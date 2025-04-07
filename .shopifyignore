@@ -1,1 +1,5 @@
-config/.github/
+.github/*
+context.md
+history.md
+README.md
+project-summary.md
