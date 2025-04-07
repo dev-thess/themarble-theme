@@ -15,7 +15,7 @@ jobs:
 
       - name: Zip theme folder
         run: |
-          zip -r theme.zip * .[^.]* -x '*.git*'
+          zip -r theme.zip * .[^.]* -x '*.git*' -x '.github/*'
 
       - name: Upload theme via Admin API
         env:
@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "Uploading theme to Shopify..."
 
-          # Create JSON payload file with proper escaping
+          # Create JSON payload file
           echo '{
             "theme": {
               "name": "CI Deploy - '"${GITHUB_SHA}"'",
@@ -32,8 +32,28 @@ jobs:
             }
           }' > theme_payload.json
 
-          # Use the JSON file in the curl request
-          curl -X POST "https://nk7dke-sj.myshopify.com/admin/api/2023-10/themes.json" \
+          # Make API request and save response
+          curl -s -X POST "https://nk7dke-sj.myshopify.com/admin/api/2023-10/themes.json" \
             -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data-binary @theme_payload.json
+            --data-binary @theme_payload.json > response.json
+
+          # Extract theme ID and enforce theme role
+          THEME_ID=$(grep -o '"id":[0-9]*' response.json | head -1 | grep -o '[0-9]*')
+
+          if [ -n "$THEME_ID" ]; then
+            echo "Theme created with ID: $THEME_ID"
+            
+            # Force theme role to ensure visibility
+            echo "Setting theme role to ensure visibility..."
+            curl -X PUT \
+              "https://nk7dke-sj.myshopify.com/admin/api/2023-10/themes/$THEME_ID.json" \
+              -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d '{"theme":{"role":"unpublished"}}'
+            
+            echo "✅ Theme deployment complete!"
+          else
+            echo "Could not extract theme ID from response. Check API permissions."
+            exit 1
+          fi
