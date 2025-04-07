@@ -15,26 +15,53 @@ jobs:
 
       - name: Zip theme folder
         run: |
-          zip -r theme.zip * .[^.]* -x '*.git*'
+          zip -r theme.zip * .[^.]* -x '*.git*' -x '.github/*'
 
       - name: Upload theme via Admin API
         env:
           SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
-          SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
         run: |
           echo "Uploading theme to Shopify..."
 
           # Create JSON payload file with proper escaping
           echo '{
             "theme": {
-              "name": "CI Deploy - '"${GITHUB_SHA}"'",
+              "name": "Marble Brew Theme - '"$(date '+%Y-%m-%d %H:%M:%S')"' - '"${GITHUB_SHA:0:7}"'",
               "role": "unpublished",
               "src": "data:application/zip;base64,'"$(base64 -w 0 theme.zip)"'"
             }
           }' > theme_payload.json
 
-          # Use the JSON file in the curl request
-          curl -X POST "https://${SHOPIFY_STORE_DOMAIN}/admin/api/2023-10/themes.json" \
+          # Use the JSON file in the curl request with -v for verbose output
+          response=$(curl -v -s -w "\n%{http_code}" \
+            -X POST "https://nk7dke-sj.myshopify.com/admin/api/2023-10/themes.json" \
             -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data-binary @theme_payload.json
+            --data-binary @theme_payload.json)
+
+          http_code=$(echo "$response" | tail -n 1)
+          response_body=$(echo "$response" | sed '$ d')
+
+          echo "HTTP Status: $http_code"
+          echo "Response: $response_body"
+
+          # Extract theme ID from response
+          theme_id=$(echo $response_body | grep -o '"id":[0-9]*' | grep -o '[0-9]*' | head -1)
+
+          if [ -n "$theme_id" ]; then
+            echo "Theme created with ID: $theme_id"
+            
+            # Force update the theme role to ensure visibility in admin
+            echo "Setting theme role to ensure visibility..."
+            curl -X PUT \
+              "https://nk7dke-sj.myshopify.com/admin/api/2023-10/themes/$theme_id.json" \
+              -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d '{"theme":{"role":"unpublished"}}'
+              
+            echo "✅ Theme deployment complete!"
+            echo "Theme should now be visible in your Shopify admin theme library"
+          else
+            echo "❌ Failed to get theme ID. Check response for details."
+            exit 1
+          fi
