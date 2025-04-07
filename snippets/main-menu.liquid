@@ -217,7 +217,11 @@
     </ul>
   </li>
   {%- else -%}
-  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+  <li class="{% if link.active %}active{% endif %}">
+    <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>
+      {{ link.title }}
+    </a>
+  </li>
   {%- endif -%}
   {%- endfor -%}
 </ul>
