@@ -8,17 +8,32 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Zip theme folder
-        run: zip -r theme.zip * .[^.]* -x '*.git*'
+        run: |
+          zip -r theme.zip * .[^.]* -x '*.git*'
 
-      - name: Deploy via Admin API
-        uses: uesteibar/shopify-upload-theme@v1.0.3
-        with:
-          store: themarble.coffee
-          password: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
-          theme_id: ${{ secrets.SHOPIFY_PROD_THEME_ID }}
-          zip_file: theme.zip
+      - name: Upload theme via Admin API
+        env:
+          SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+          SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+        run: |
+          echo "Uploading theme to Shopify..."
+
+          curl -X POST "https://${SHOPIFY_STORE_DOMAIN}/admin/api/2023-10/themes.json" \
+            -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data-binary @<(cat <<EOF
+{
+  "theme": {
+    "name": "CI Deploy - ${GITHUB_SHA}",
+    "role": "unpublished",
+    "src": "data:application/zip;base64,$(base64 -w 0 theme.zip)"
+  }
+}
+EOF
+)
