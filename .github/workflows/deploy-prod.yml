@@ -16,7 +16,7 @@ jobs:
         run: zip -r theme.zip * .[^.]* -x '*.git*'
 
       - name: Deploy via Admin API
-        uses: BaoNguyenDev/shopify-upload-theme@main
+        uses: uesteibar/shopify-upload-theme@v1.0.3
         with:
           store: themarble.coffee
           password: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
