@@ -35,5 +35,4 @@ jobs:
     "src": "data:application/zip;base64,$(base64 -w 0 theme.zip)"
   }
 }
-EOF
-)
+EOF)
