@@ -1,4 +1,4 @@
-name: Deploy Theme to Shopify with CLI
+name: Deploy Theme to Shopify with Theme Kit
 
 on:
   push:
@@ -13,46 +13,48 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20"
-
-      - name: Install Shopify CLI
+      - name: Install Theme Kit
         run: |
-          echo "Installing Shopify CLI..."
-          npm install -g @shopify/cli @shopify/theme
-          echo "Shopify CLI version:"
-          shopify version
+          echo "Installing Theme Kit..."
+          curl -s https://shopify.github.io/themekit/scripts/install.py | python3
+          echo "Theme Kit version:"
+          theme version
 
       - name: Deploy to Shopify
         env:
-          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
-          SHOPIFY_FLAG_STORE: nk7dke-sj.myshopify.com
+          SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_CLI_AUTH_TOKEN }}
+          SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
         run: |
           echo "Authenticating with Shopify..."
-          THEME_NAME="CI Deploy - $(date '+%Y-%m-%d %H:%M:%S') - ${GITHUB_SHA:0:7}"
+          echo "Using store: $SHOPIFY_STORE"
 
+          THEME_NAME="CI-Deploy-${GITHUB_SHA:0:7}"
           echo "Deploying theme as '$THEME_NAME'..."
 
-          # Create temporary config for authentication
-          mkdir -p .shopify
-          cat > .shopify/theme.toml << EOF
-          [environments.live]
-          store = "nk7dke-sj.myshopify.com"
-          theme = ["--theme-name=$THEME_NAME"]
-          EOF
+          # Create a new theme
+          echo "Creating new theme..."
+          theme new --password=$SHOPIFY_PASSWORD --store=$SHOPIFY_STORE --name="$THEME_NAME"
 
-          # Deploy using Shopify CLI
-          echo "Starting deployment..."
-          shopify theme push --theme-name="$THEME_NAME" --password=${{ secrets.SHOPIFY_ADMIN_TOKEN }} --store=nk7dke-sj.myshopify.com --unpublished --no-development
+          # Get the ID of the newly created theme
+          echo "Getting theme ID..."
+          THEME_ID=$(theme list -j --password=$SHOPIFY_PASSWORD --store=$SHOPIFY_STORE | grep -o '"id": [0-9]*' | head -1 | grep -o '[0-9]*')
 
-          # Check exit status
-          DEPLOY_STATUS=$?
-          if [ $DEPLOY_STATUS -eq 0 ]; then
-            echo "✅ Theme deployment complete!"
-            echo "Theme should now be visible in your Shopify admin"
+          if [ -n "$THEME_ID" ]; then
+            echo "Created theme with ID: $THEME_ID"
+
+            # Deploy the theme files
+            echo "Deploying files to theme ID: $THEME_ID"
+            theme deploy --password=$SHOPIFY_PASSWORD --store=$SHOPIFY_STORE --themeid=$THEME_ID --allow-live
+
+            DEPLOY_STATUS=$?
+            if [ $DEPLOY_STATUS -eq 0 ]; then
+              echo "✅ Theme deployment complete!"
+              echo "Theme should now be visible in your Shopify admin"
+            else
+              echo "❌ Theme deployment failed with status $DEPLOY_STATUS"
+              exit $DEPLOY_STATUS
+            fi
           else
-            echo "❌ Theme deployment failed with status $DEPLOY_STATUS"
-            exit $DEPLOY_STATUS
+            echo "❌ Failed to create theme"
+            exit 1
           fi
