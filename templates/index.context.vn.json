@@ -1,0 +1,34 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "parent": "index.json",
+  "context": {
+    "market": "vn"
+  },
+  "sections": {
+    "16272984271dd9cdb1": {
+      "custom_css": [
+        ".main-title h2 {line-height: 60px;}",
+        ".hero-slider-content > h5 {line-height: 24px;}"
+      ],
+      "settings": {},
+      "blocks": {
+        "16272984271dd9cdb1-1": {
+          "settings": {
+            "slider_caption_title_2": "Thương hiệu cà phê online <br> số 1 Việt Nam",
+            "slider_caption_btn": "Trải nghiệm ngay",
+            "slide_caption_btn_hover_color": "#ffffff",
+            "slide_caption_btn_border_color": "#daa520"
+          }
+        }
+      }
+    }
+  }
+}

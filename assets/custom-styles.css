@@ -1,0 +1,80 @@
+/* Custom styles for Marble Brew theme */
+
+/* Active menu styling - Unified approach */
+nav.site-nav > ul > li.active > a,
+li.active > a,
+a[aria-current="page"] {
+  color: #003459;
+  font-weight: 600;
+  border-bottom: 4px solid var(--goldenrod);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Reset any default text decoration or other underlines */
+nav.site-nav > ul > li.active > a:after {
+  display: none; /* Remove the pseudo-element underline */
+}
+
+/* Ensure no text-decoration on hover */
+nav.site-nav > ul > li.active > a:hover,
+li.active > a:hover,
+a[aria-current="page"]:hover {
+  text-decoration: none;
+} 
+
+.bans-button {
+    background-color: var(--goldenrod);
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: none;
+}
+
+.bans-button:hover {
+    box-shadow: var(--goldenrod-shadow);
+    transform: translateY(-1px);
+}
+
+.single-product--smarthome .single-product__content {
+  position: relative !important;
+  padding-top: 25px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.bans-button {
+  border: none;
+}
+
+button {
+  border: none !important;
+}
+
+button[data-toggle="modal"] {
+  background: none;
+}
+
+
+.carousel-fade-overlay {
+  position: absolute;
+  top: 0;
+  width: 24px;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.carousel-fade-overlay.fade-left {
+  left: 0;
+  background: linear-gradient(to right, var(--marble), transparent);
+}
+
+.carousel-fade-overlay.fade-right {
+  right: 0;
+  background: linear-gradient(to left, var(--marble), transparent);
+}
+
+.product-carousel {
+  position: relative;
+}

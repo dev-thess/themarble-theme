@@ -1,0 +1,35 @@
+:root {
+  --obsidian-blue: #003459;
+  --champagne: #D2B68A;
+  --goldenrod: #DAA520;
+  --marble: #E5E4E0;
+
+  --supp-blue-01: #202E66;
+  --supp-blue-02: #2A4176;
+  --supp-blue-03: #365587;
+  --supp-blue-04: #456B9A;
+  --supp-blue-05: #5483AE;
+  --supp-blue-06: #65A0C6;
+  --supp-blue-07: #79C2E1;
+
+  --supp-ocean-01: #008BA4;
+  --supp-ocean-02: #0F92AA;
+  --supp-ocean-03: #3F9AB0;
+  --supp-ocean-04: #5CA4B7;
+  --supp-ocean-05: #74AEBD;
+  --supp-ocean-06: #89B9C6;
+  --supp-ocean-07: #9FC4CE;
+
+  --supp-ember-01: #BE3633;
+  --supp-ember-02: #C24A35;
+  --supp-ember-03: #C75E38;
+  --supp-ember-04: #CC703B;
+  --supp-ember-05: #D1823F;
+  --supp-ember-06: #D79543;
+  --supp-ember-07: #DDA846;
+
+  --white: #FFFFFF;
+  --pearl: #FDFFFF;
+
+  --goldenrod-shadow: 0px 8px 10px #866d3194;
+}

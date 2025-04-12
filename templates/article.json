@@ -1,0 +1,76 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "article-template",
+      "blocks": {
+        "36451f1d-011d-41b7-a17b-38c71ebafca9": {
+          "type": "search",
+          "settings": {
+            "wedget_title": "Search"
+          }
+        },
+        "14e43239-a9f8-4e4c-a1b7-de84aefdc3fa": {
+          "type": "recent_post",
+          "settings": {
+            "wedget_title": "Recent Post",
+            "recent_post_limit_handle": 3,
+            "post_title_len": 3
+          }
+        },
+        "ae3c15bb-400f-414c-8d02-b1b02e9902c1": {
+          "type": "archive",
+          "disabled": true,
+          "settings": {
+            "wedget_title": "Archive"
+          }
+        },
+        "8e12cffc-72a0-47b5-be27-8bdf54b8b575": {
+          "type": "tag",
+          "settings": {
+            "wedget_title": "Tags",
+            "blog_tags_list_limit_handle": 10
+          }
+        },
+        "3f87d4ca-0202-4a45-9f05-5410cbb648f1": {
+          "type": "banner",
+          "settings": {
+            "wedget_title": "",
+            "banner_image": "shopify://shop_images/our-team-5.jpg",
+            "banner_image_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "36451f1d-011d-41b7-a17b-38c71ebafca9",
+        "14e43239-a9f8-4e4c-a1b7-de84aefdc3fa",
+        "ae3c15bb-400f-414c-8d02-b1b02e9902c1",
+        "8e12cffc-72a0-47b5-be27-8bdf54b8b575",
+        "3f87d4ca-0202-4a45-9f05-5410cbb648f1"
+      ],
+      "settings": {
+        "container_width": "container",
+        "comment_post_limit_handle": 5,
+        "sidebar_handle": "left_sidebar_handle",
+        "post_author_enable": true,
+        "post_publish_time_enable": true,
+        "post_comment_enbale": true,
+        "post_title_enable": true,
+        "article_tag_enable": true,
+        "article_social_share": true,
+        "social_share_title": "Share this post:"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
