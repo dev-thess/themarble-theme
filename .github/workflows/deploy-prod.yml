@@ -13,17 +13,35 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Check environment
+        run: |
+          echo "Store domain: $SHOPIFY_STORE_DOMAIN"
+          echo "API token exists: ${{ secrets.SHOPIFY_ADMIN_TOKEN != '' }}"
+          echo "Github SHA: ${GITHUB_SHA}"
+        env:
+          SHOPIFY_STORE_DOMAIN: "nk7dke-sj.myshopify.com"
+
       - name: Zip theme folder
         run: |
+          echo "Creating theme zip file..."
           zip -r theme.zip * .[^.]* -x '*.git*' -x '.github/*'
+          ls -la theme.zip
+          echo "Theme zip size: $(du -h theme.zip | cut -f1)"
+
+          # Check if zip is too large (>20MB may cause issues)
+          SIZE_BYTES=$(stat -c%s theme.zip)
+          if [ $SIZE_BYTES -gt 20000000 ]; then
+            echo "Warning: Theme zip is large ($(du -h theme.zip | cut -f1)). This might cause API timeout issues."
+          fi
 
       - name: Upload theme via Admin API
         env:
           SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+          SHOPIFY_STORE_DOMAIN: "nk7dke-sj.myshopify.com"
         run: |
           echo "Uploading theme to Shopify..."
 
-          # Create JSON payload file
+          # Create JSON payload file with proper escaping
           echo '{
             "theme": {
               "name": "CI Deploy - '"${GITHUB_SHA}"'",
@@ -32,11 +50,32 @@ jobs:
             }
           }' > theme_payload.json
 
-          # Make API request and save response
-          curl -s -X POST "https://${SHOPIFY_STORE_DOMAIN}/admin/api/2023-10/themes.json" \
+          echo "Payload file created, size: $(du -h theme_payload.json | cut -f1)"
+
+          # Set a longer timeout for curl to handle large files
+          echo "Making API request with verbose output..."
+
+          # Use verbose mode and increased timeout
+          curl -v -s --max-time 180 -X POST "https://${SHOPIFY_STORE_DOMAIN}/admin/api/2023-10/themes.json" \
             -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data-binary @theme_payload.json > response.json
+            --data-binary @theme_payload.json -o response.json
+
+          # Check curl exit code
+          CURL_STATUS=$?
+          if [ $CURL_STATUS -ne 0 ]; then
+            echo "Curl command failed with status $CURL_STATUS"
+            echo "Common curl errors:"
+            echo "  6: Couldn't resolve host name"
+            echo "  7: Failed to connect"
+            echo "  28: Operation timeout"
+            echo "See https://curl.se/libcurl/c/libcurl-errors.html for more details"
+            exit $CURL_STATUS
+          fi
+
+          # Display response for debugging
+          echo "API Response:"
+          cat response.json
 
           # Extract theme ID and enforce theme role
           THEME_ID=$(grep -o '"id":[0-9]*' response.json | head -1 | grep -o '[0-9]*')
@@ -46,15 +85,16 @@ jobs:
             
             # Force theme role to ensure visibility
             echo "Setting theme role to ensure visibility..."
-            curl -X PUT \
+            curl -v -s -X PUT \
               "https://${SHOPIFY_STORE_DOMAIN}/admin/api/2023-10/themes/$THEME_ID.json" \
               -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
               -H "Content-Type: application/json" \
               -d '{"theme":{"role":"unpublished"}}'
-              --data-binary @theme_payload.json -o response.json
             
             echo "✅ Theme deployment complete!"
           else
             echo "Could not extract theme ID from response. Check API permissions."
+            echo "Full response:"
+            cat response.json
             exit 1
           fi
