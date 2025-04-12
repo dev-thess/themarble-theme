@@ -1,4 +1,4 @@
-name: Deploy Theme to Shopify with Theme Kit
+name: Deploy Theme to Shopify
 
 on:
   push:
@@ -17,18 +17,19 @@ jobs:
         run: |
           echo "Installing Theme Kit..."
           curl -s https://shopify.github.io/themekit/scripts/install.py | python3
+          sudo mv theme /usr/local/bin/
           echo "Theme Kit version:"
           theme version
 
       - name: Deploy to Shopify
         env:
-          SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_CLI_AUTH_TOKEN }}
+          SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
           SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
         run: |
           echo "Authenticating with Shopify..."
           echo "Using store: $SHOPIFY_STORE"
 
-          THEME_NAME="CI-Deploy-${GITHUB_SHA:0:7}"
+          THEME_NAME="Marble-Theme-${GITHUB_SHA:0:7}-$(date +%Y%m%d%H%M)"
           echo "Deploying theme as '$THEME_NAME'..."
 
           # Create a new theme
@@ -37,7 +38,7 @@ jobs:
 
           # Get the ID of the newly created theme
           echo "Getting theme ID..."
-          THEME_ID=$(theme list -j --password=$SHOPIFY_PASSWORD --store=$SHOPIFY_STORE | grep -o '"id": [0-9]*' | head -1 | grep -o '[0-9]*')
+          THEME_ID=$(theme list -j --password=$SHOPIFY_PASSWORD --store=$SHOPIFY_STORE | grep -o '"id":[0-9]*' | head -1 | grep -o '[0-9]*')
 
           if [ -n "$THEME_ID" ]; then
             echo "Created theme with ID: $THEME_ID"
@@ -49,7 +50,9 @@ jobs:
             DEPLOY_STATUS=$?
             if [ $DEPLOY_STATUS -eq 0 ]; then
               echo "✅ Theme deployment complete!"
-              echo "Theme should now be visible in your Shopify admin"
+              echo "Theme is now available in your Shopify admin at:"
+              echo "https://$SHOPIFY_STORE/admin/themes/$THEME_ID"
+              echo "Preview link: https://$SHOPIFY_STORE/?preview_theme_id=$THEME_ID"
             else
               echo "❌ Theme deployment failed with status $DEPLOY_STATUS"
               exit $DEPLOY_STATUS
