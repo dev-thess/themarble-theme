@@ -44,7 +44,7 @@ jobs:
           # Create JSON payload file with proper escaping
           echo '{
             "theme": {
-              "name": "CI Deploy - '"${GITHUB_SHA}"'",
+              "name": "CI Deploy - '"${GITHUB_SHA:0:7}"'",
               "role": "unpublished",
               "src": "data:application/zip;base64,'"$(base64 -w 0 theme.zip)"'"
             }
@@ -55,14 +55,20 @@ jobs:
           # Set a longer timeout for curl to handle large files
           echo "Making API request with verbose output..."
 
+          # Save both stdout and stderr to files
           # Use verbose mode and increased timeout
-          curl -v -s --max-time 180 -X POST "https://${SHOPIFY_STORE_DOMAIN}/admin/api/2023-10/themes.json" \
+          curl -v -s --max-time 300 -X POST "https://${SHOPIFY_STORE_DOMAIN}/admin/api/2023-10/themes.json" \
             -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data-binary @theme_payload.json -o response.json
+            --data-binary @theme_payload.json -o response.json 2>curl_error.log
 
           # Check curl exit code
           CURL_STATUS=$?
+
+          echo "Curl exit status: $CURL_STATUS"
+          echo "Curl error log:"
+          cat curl_error.log
+
           if [ $CURL_STATUS -ne 0 ]; then
             echo "Curl command failed with status $CURL_STATUS"
             echo "Common curl errors:"
@@ -77,10 +83,25 @@ jobs:
           echo "API Response:"
           cat response.json
 
-          # Extract theme ID and enforce theme role
-          THEME_ID=$(grep -o '"id":[0-9]*' response.json | head -1 | grep -o '[0-9]*')
+          # Check if response is valid JSON
+          if ! jq empty response.json 2>/dev/null; then
+            echo "Error: Response is not valid JSON"
+            echo "Raw response content:"
+            cat response.json
+            exit 1
+          fi
 
-          if [ -n "$THEME_ID" ]; then
+          # Check for API error in response
+          ERROR_MESSAGE=$(jq -r '.errors' response.json 2>/dev/null)
+          if [ "$ERROR_MESSAGE" != "null" ] && [ "$ERROR_MESSAGE" != "" ]; then
+            echo "Error from Shopify API: $ERROR_MESSAGE"
+            exit 1
+          fi
+
+          # Extract theme ID and enforce theme role
+          THEME_ID=$(jq -r '.theme.id' response.json)
+
+          if [ -n "$THEME_ID" ] && [ "$THEME_ID" != "null" ]; then
             echo "Theme created with ID: $THEME_ID"
             
             # Force theme role to ensure visibility
@@ -89,11 +110,18 @@ jobs:
               "https://${SHOPIFY_STORE_DOMAIN}/admin/api/2023-10/themes/$THEME_ID.json" \
               -H "X-Shopify-Access-Token: ${SHOPIFY_ADMIN_TOKEN}" \
               -H "Content-Type: application/json" \
-              -d '{"theme":{"role":"unpublished"}}'
+              -d '{"theme":{"role":"unpublished"}}' -o role_response.json 2>role_error.log
+            
+            ROLE_STATUS=$?
+            if [ $ROLE_STATUS -ne 0 ]; then
+              echo "Failed to set theme role, but theme was created. Status: $ROLE_STATUS"
+              cat role_error.log
+            fi
             
             echo "✅ Theme deployment complete!"
+            echo "Theme should now be visible in your Shopify admin at: https://${SHOPIFY_STORE_DOMAIN}/admin/themes/$THEME_ID"
           else
-            echo "Could not extract theme ID from response. Check API permissions."
+            echo "❌ Could not extract theme ID from response. Check API permissions."
             echo "Full response:"
             cat response.json
             exit 1
