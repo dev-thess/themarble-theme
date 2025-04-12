@@ -1,6 +1,0 @@
-a.bans-button:hover {
-    box-shadow: var(--goldenrod-shadow);
-    background: var(--goldenrod) !important;
-    border-color: var(--goldenrod) !important;
-    color: var(--pearl) !important;
-}
