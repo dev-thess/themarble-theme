@@ -83,3 +83,35 @@ button[data-toggle="modal"] {
 .single-product__content .title .product-cart-action a {
   font-size: 14px;
 }
+
+.single-product__content .title h3 a {
+  margin-bottom: 0px !important;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--obsidian-blue);
+}
+
+.product-line {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  position: absolute;
+  top: -32px;
+  padding: 4px 8px;
+  background-color: var(--champagne);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--obsidian-blue);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.single-product__content {
+  text-align: start;
+}
+
+.single-product__content { 
+  padding: 0px 12px;
+}
