@@ -1,7 +1,18 @@
 {
   "article": [],
   "blog": [],
-  "collection": [],
+  "collection": [
+    {
+      "key": "product_line_icon",
+      "namespace": "custom",
+      "name": "Product line icon",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    }
+  ],
   "company": [],
   "company_location": [],
   "location": [],
