@@ -82,7 +82,7 @@
   </div>
   
   <div class="single-product__content {{ product_content_align }}">
-    {% render 'product-line' %}
+    {% render 'product-line', product: product %}
     <div class="title">
       {%- assign protitlecount = settings.prodtitleword -%}
       {%- if settings.prod_title_enable -%}

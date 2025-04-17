@@ -1,0 +1,17 @@
+{%- comment -%}
+  Displays the “product line” icon + title, if the
+  product has a product_line metafield and its
+  first collection has a product_line_icon metafield.
+{%- endcomment -%}
+{% assign line_collection = product.collections | first %}
+{%- if line_collection and line_collection.metafields.custom.product_line_icon -%}
+    <div class="product-line">
+      {%- if line_collection and line_collection.metafields.custom.product_line_icon -%}
+        <img
+          src="{{ line_collection.metafields.custom.product_line_icon | file_url }}"
+          alt="{{ line_collection.title }}"
+        >
+        <span>{{ line_collection.title }}</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}

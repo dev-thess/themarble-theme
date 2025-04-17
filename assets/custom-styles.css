@@ -79,6 +79,11 @@ button[data-toggle="modal"] {
   position: relative;
 }
 
+.product-line img {
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+}
 
 .single-product__content .title .product-cart-action a {
   font-size: 14px;
@@ -98,7 +103,7 @@ button[data-toggle="modal"] {
   height: 24px;
   position: absolute;
   top: -32px;
-  padding: 4px 8px;
+  padding: 4px 8px 4px 4px;
   background-color: var(--champagne);
   font-size: 10px;
   font-weight: 700;
