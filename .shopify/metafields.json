@@ -8,7 +8,18 @@
   "market": [],
   "order": [],
   "page": [],
-  "product": [],
+  "product": [
+    {
+      "key": "product_line",
+      "namespace": "custom",
+      "name": "Product line",
+      "description": "Used to define which product line a coffee belongs to.",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
   "variant": [],
   "shop": []
 }

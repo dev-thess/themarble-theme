@@ -82,6 +82,13 @@
   </div>
   
   <div class="single-product__content {{ product_content_align }}">
+    {% if product.metafields.custom.product_line %}
+      <div class="product-line">
+        {% assign line_collection = product.collections %}
+          <p>{{ line_collection.value }}</p>
+        {{ product.metafields.custom.product_line.value }}
+      </div>
+    {% endif %}
     <div class="title">
       {%- assign protitlecount = settings.prodtitleword -%}
       {%- if settings.prod_title_enable -%}
@@ -171,6 +178,7 @@
       </div>
       {%- endif -%}
     </div>
+    
     <div>
       <div class="price">
         <span id="product_current_price" class="discounted-price" >{{ product.variants.first.price | money }}</span>

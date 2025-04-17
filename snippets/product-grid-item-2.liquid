@@ -61,6 +61,14 @@
   </div>
   <div class="single-product__content">
     <div class="title">
+      {% if product.metafields.custom.product_line %}
+        <div class="product-line">
+          {% assign line_collection = product.collections | first %}
+          {% if line_collection and line_collection.metafields.custom.product_line_icon %}
+            <img src="{{ line_collection.metafields.custom.product_line_icon.value | file_url }}" alt="{{ line_collection.title }}">
+          {% endif %}
+        </div>
+      {% endif %}
       <h3 class="popup_cart_title">  <a href="{{ product.url | within: collection }}">{{ product.title }}</a></h3>
       {%- if settings.product_cart_action_enable -%}
       <div class="product-cart-action">
