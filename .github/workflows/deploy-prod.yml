@@ -13,59 +13,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Theme Kit
+      - name: Install Shopify CLI
         run: |
-          echo "Installing Theme Kit..."
-          curl -s https://shopify.github.io/themekit/scripts/install.py | python3
-          echo "Theme Kit version:"
-          theme version
+          echo "Installing Shopify CLI..."
+          npm install -g @shopify/cli @shopify/theme
+          shopify version
 
-      - name: Deploy to Shopify via Theme Kit
+      - name: Deploy to Shopify
         env:
-          SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
           SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+          SHOPIFY_API_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+          THEME_ID: ${{ secrets.SHOPIFY_PROD_THEME_ID }}
         run: |
-          set -e
-
-          echo "Authenticating with Shopify..."
-          echo "Using store: $SHOPIFY_STORE"
-
-          # Build a unique theme name
-          SHORT_SHA=${GITHUB_SHA:0:7}
-          TIMESTAMP=$(date +%Y%m%d%H%M)
-          THEME_NAME="Marble-Theme-$SHORT_SHA-$TIMESTAMP"
-          echo "➤ Deploying theme as '$THEME_NAME'..."
-
-          # Create a new, unpublished theme (Theme Kit creates unpublished by default)
-          echo "➤ Creating new theme..."
-          theme new \
-            --password="$SHOPIFY_PASSWORD" \
+          echo "Deploying to store: $SHOPIFY_STORE, theme ID: $THEME_ID"
+          shopify theme deploy \
             --store="$SHOPIFY_STORE" \
-            --name="$THEME_NAME"
-
-          # Fetch the ID of the most‑recently created theme
-          echo "➤ Retrieving new theme ID..."
-          # theme list -j outputs JSON; we grep the first "id":<number>
-          THEME_ID=$(theme list -j \
-            --password="$SHOPIFY_PASSWORD" \
-            --store="$SHOPIFY_STORE" \
-            | grep -o '"id":[0-9]*' | head -1 | grep -o '[0-9]*')
-
-          if [[ -z "$THEME_ID" ]]; then
-            echo "❌ Could not extract theme ID. Aborting."
-            exit 1
-          fi
-          echo "✔ Created theme with ID: $THEME_ID"
-
-          # Deploy all files (including ones under .gitignore)
-          echo "➤ Deploying files to theme $THEME_ID..."
-          theme deploy \
-            --password="$SHOPIFY_PASSWORD" \
-            --store="$SHOPIFY_STORE" \
+            --password="$SHOPIFY_API_TOKEN" \
             --themeid="$THEME_ID" \
             --allow-live \
-            --no-ignore
-
-          echo "✅ Theme deployment complete!"
-          echo "→ Admin UI: https://$SHOPIFY_STORE/admin/themes/$THEME_ID"
-          echo "→ Preview : https://$SHOPIFY_STORE/?preview_theme_id=$THEME_ID"
+            --verbose
