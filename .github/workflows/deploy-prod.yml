@@ -20,43 +20,54 @@ jobs:
           echo "Theme Kit version:"
           theme version
 
-      - name: Deploy to Shopify
+      - name: Deploy to Shopify via Theme Kit
         env:
           SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
           SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
         run: |
+          set -e
+
           echo "Authenticating with Shopify..."
           echo "Using store: $SHOPIFY_STORE"
 
-          THEME_NAME="Marble-Theme-${GITHUB_SHA:0:7}-$(date +%Y%m%d%H%M)"
+          # build a unique name for this deploy
+          SHORT_SHA=${GITHUB_SHA:0:7}
+          TIMESTAMP=$(date +%Y%m%d%H%M)
+          THEME_NAME="Marble-Theme-$SHORT_SHA-$TIMESTAMP"
           echo "Deploying theme as '$THEME_NAME'..."
 
-          # Create a new theme
-          echo "Creating new theme..."
-          theme new --password=$SHOPIFY_PASSWORD --store=$SHOPIFY_STORE --name="$THEME_NAME"
+          # step 1: tạo theme mới (không phải publish luôn)
+          echo "➤ Creating new theme..."
+          theme new \
+            --password="$SHOPIFY_PASSWORD" \
+            --store="$SHOPIFY_STORE" \
+            --name="$THEME_NAME" \
+            --unpublished \
+            --no-ignore  # ensure mọi file đều được include
 
-          # Get the ID of the newly created theme
-          echo "Getting theme ID..."
-          THEME_ID=$(theme list -j --password=$SHOPIFY_PASSWORD --store=$SHOPIFY_STORE | grep -o '"id":[0-9]*' | head -1 | grep -o '[0-9]*')
+          # step 2: lấy ID của theme vừa tạo
+          echo "➤ Fetching the new theme ID..."
+          THEME_ID=$(theme list -j \
+            --password="$SHOPIFY_PASSWORD" \
+            --store="$SHOPIFY_STORE" \
+            | jq -r '.[0].id')
 
-          if [ -n "$THEME_ID" ]; then
-            echo "Created theme with ID: $THEME_ID"
-
-            # Deploy the theme files
-            echo "Deploying files to theme ID: $THEME_ID"
-            theme deploy --password=$SHOPIFY_PASSWORD --store=$SHOPIFY_STORE --themeid=$THEME_ID --allow-live
-
-            DEPLOY_STATUS=$?
-            if [ $DEPLOY_STATUS -eq 0 ]; then
-              echo "✅ Theme deployment complete!"
-              echo "Theme is now available in your Shopify admin at:"
-              echo "https://$SHOPIFY_STORE/admin/themes/$THEME_ID"
-              echo "Preview link: https://$SHOPIFY_STORE/?preview_theme_id=$THEME_ID"
-            else
-              echo "❌ Theme deployment failed with status $DEPLOY_STATUS"
-              exit $DEPLOY_STATUS
-            fi
-          else
-            echo "❌ Failed to create theme"
+          if [[ -z "$THEME_ID" || "$THEME_ID" == "null" ]]; then
+            echo "❌ Failed to retrieve theme ID. Aborting."
             exit 1
           fi
+          echo "✔ Created theme with ID: $THEME_ID"
+
+          # step 3: deploy toàn bộ file
+          echo "➤ Deploying files to theme ID $THEME_ID..."
+          theme deploy \
+            --password="$SHOPIFY_PASSWORD" \
+            --store="$SHOPIFY_STORE" \
+            --themeid="$THEME_ID" \
+            --allow-live \
+            --no-ignore     # deploy cả những file mà .gitignore đang bỏ qua
+
+          echo "✅ Theme deployment complete!"
+          echo ""
+          echo "→ Admin URL: https://$SHOPIFY_STORE/admin/themes/$THEME_ID"
+          echo "→ Preview URL: https://$SHOPIFY_STORE/?preview_theme_id=$THEME_ID"
