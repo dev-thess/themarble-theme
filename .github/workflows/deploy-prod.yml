@@ -26,7 +26,7 @@ jobs:
           THEME_ID: ${{ secrets.SHOPIFY_PROD_THEME_ID }}
         run: |
           echo "Deploying to store: $SHOPIFY_STORE, theme ID: $THEME_ID"
-          shopify theme deploy \
+          shopify theme push \
             --store="$SHOPIFY_STORE" \
             --password="$SHOPIFY_API_TOKEN" \
             --themeid="$THEME_ID" \
