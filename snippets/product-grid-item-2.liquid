@@ -65,7 +65,8 @@
         <div class="product-line">
           {% assign line_collection = product.collections | first %}
           {% if line_collection and line_collection.metafields.custom.product_line_icon %}
-            <img src="{{ line_collection.metafields.custom.product_line_icon.value | file_url }}" alt="{{ line_collection.title }}">
+            <img src="{{ line_collection.metafields.custom.product_line_icon | file_url }}" alt="{{ line_collection.title }}">
+            <span>{{ line_collection.title }}</span>
           {% endif %}
         </div>
       {% endif %}
