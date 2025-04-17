@@ -151,10 +151,16 @@
       {%- endif -%}
     </div>
     <div class="price">
-      <span id="product_current_price" class="discounted-price">{{ product.variants.first.price | money }}</span>
-      {% if product.variants.first.compare_at_price > product.variants.first.price %}
-      <span class="main-price discounted ">{{ product.variants.first.compare_at_price | money }}</span>
-      {% endif %}
+      <span id="product_current_price" class="discounted-price">{%- if product.variants.size > 1 -%}
+        <span class="product-price">
+          From {{ product.price_min | money }}
+        </span>
+      {%- else -%}
+        <span class="product-price">
+          {{ product.price | money }}
+        </span>
+      {%- endif -%}
+      
       <small class="unit_price_box caption {% if available == false or product.selected_or_first_available_variant.unit_price_measurement == nil %} hidden{% endif %}">
         <dd>
           <span id="product__unit_price">{{- product.selected_or_first_available_variant.unit_price | money -}}</span>
