@@ -78,3 +78,8 @@ button[data-toggle="modal"] {
 .product-carousel {
   position: relative;
 }
+
+
+.single-product__content .title .product-cart-action a {
+  font-size: 14px;
+}
