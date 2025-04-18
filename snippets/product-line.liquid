@@ -1,17 +1,23 @@
 {%- comment -%}
-  Displays the “product line” icon + title, if the
-  product has a product_line metafield and its
-  first collection has a product_line_icon metafield.
+  Look through **this product’s** collections, find the first one
+  whose `custom.is_product_line` metafield is true, then render it.
 {%- endcomment -%}
-{% assign line_collection = product.collections | first %}
-{%- if line_collection and line_collection.metafields.custom.product_line_icon -%}
-    <div class="product-line">
-      {%- if line_collection and line_collection.metafields.custom.product_line_icon -%}
-        <img
-          src="{{ line_collection.metafields.custom.product_line_icon | file_url }}"
-          alt="{{ line_collection.title }}"
-        >
-        <span>{{ line_collection.title }}</span>
-      {%- endif -%}
-    </div>
-  {%- endif -%}
+
+{%- assign line_collection = null -%}
+{% for coll in product.collections %}
+  {% if coll.metafields.custom.is_product_line.value == true %}
+    {% assign line_collection = coll %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if line_collection %}
+  <div class="product-line">
+    {% assign icon = line_collection.metafields.custom.product_line_icon %}
+    {% if icon and icon.value %}
+      <img src="{{ icon | file_url }}" alt="{{ line_collection.title }}"
+      >
+    {% endif %}
+    <span>{{ line_collection.title }}</span>
+  </div>
+{% endif %}

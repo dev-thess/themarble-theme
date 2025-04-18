@@ -62,6 +62,7 @@
   <div class="single-product__content">
     <div class="title">
       {% render 'product-line', product: product %}
+      {% render 'product‑tagline' %}
       <h3 class="popup_cart_title">  <a href="{{ product.url | within: collection }}">{{ product.title }}</a></h3>
       {%- if settings.product_cart_action_enable -%}
       <div class="product-cart-action">

@@ -3,23 +3,23 @@
   "blog": [],
   "collection": [
     {
-      "key": "is_product_line",
-      "namespace": "custom",
-      "name": "Is Product Line?",
-      "description": "Used to determine if this collection is a product line.",
-      "type": {
-        "name": "boolean",
-        "category": "BOOLEAN"
-      }
-    },
-    {
       "key": "product_line_icon",
       "namespace": "custom",
-      "name": "Product Line Icon",
-      "description": "Icon representing the product line",
+      "name": "Product line icon",
+      "description": "",
       "type": {
         "name": "file_reference",
         "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "is_product_line",
+      "namespace": "custom",
+      "name": "Is product line",
+      "description": "",
+      "type": {
+        "name": "boolean",
+        "category": "TRUE_FALSE"
       }
     }
   ],
@@ -31,132 +31,103 @@
   "page": [],
   "product": [
     {
-      "key": "product_line",
+      "key": "product-short_description",
       "namespace": "custom",
-      "name": "Product Line",
-      "description": "Which product line a coffee belongs to.",
+      "name": "Short description",
+      "description": "A brief summary of the product, shown prominently on the product page.",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "brew_method",
+      "namespace": "custom",
+      "name": "Brew method",
+      "description": "Suggested brewing methods suitable for this coffee blend.",
       "type": {
         "name": "list.single_line_text_field",
         "category": "TEXT"
-      },
-      "validations": {
-        "enum": ["Focus", "Relax"]
       }
     },
     {
       "key": "roast_level",
       "namespace": "custom",
-      "name": "Roast Level",
-      "description": "Roast level of this blend.",
+      "name": "Roast level",
+      "description": "Indicates the roast level of the coffee, such as Light, Medium, or Dark.",
       "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      },
-      "validations": {
-        "enum": ["Light", "Medium", "Dark"]
-      }
-    },
-    {
-      "key": "origin",
-      "namespace": "custom",
-      "name": "Origin",
-      "description": "Coffee bean origin (e.g., Đắk Nông, Lâm Đồng).",
-      "type": {
-        "name": "single_line_text_field",
+        "name": "list.single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "aroma",
+      "key": "scent",
       "namespace": "custom",
-      "name": "Aroma",
-      "description": "Aroma description.",
+      "name": "Scent",
+      "description": "Highlights the fragrance or scent profile of the coffee.",
       "type": {
-        "name": "single_line_text_field",
+        "name": "list.single_line_text_field",
         "category": "TEXT"
-      },
-      "validations": {
-        "enum": [
-          {
-            "value": "Moderate",
-            "label": "Moderate (3)"
-          },
-          {
-            "value": "Rich",
-            "label": "Rich (4)"
-          },
-          {
-            "value": "Intense",
-            "label": "Intense (5)"
-          }
-        ]
+      }
+    },
+    {
+      "key": "flavor_notes",
+      "namespace": "custom",
+      "name": "Flavor notes",
+      "description": "Describes the key flavor notes, such as chocolate, citrus, or berry.",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
       }
     },
     {
       "key": "acidity",
       "namespace": "custom",
       "name": "Acidity",
-      "description": "Acidity level from 1 to 5.",
+      "description": "Rates the acidity level of the coffee on a scale from 1 to 5.",
       "type": {
-        "name": "number_integer",
+        "name": "list.number_integer",
         "category": "NUMBER"
-      },
-      "validations": {
-        "min": 1,
-        "max": 5
       }
     },
     {
       "key": "body",
       "namespace": "custom",
       "name": "Body",
-      "description": "Body level from 1 to 5.",
+      "description": "Indicates the body or richness level, ranging from light to full-bodied.",
       "type": {
-        "name": "number_integer",
+        "name": "list.number_integer",
         "category": "NUMBER"
-      },
-      "validations": {
-        "min": 1,
-        "max": 5
       }
     },
     {
       "key": "aftertaste",
       "namespace": "custom",
       "name": "Aftertaste",
-      "description": "Aftertaste level from 1 to 5.",
+      "description": "Describes the lingering taste after drinking, rated on a 1 to 5 scale.",
       "type": {
-        "name": "number_integer",
+        "name": "list.number_integer",
         "category": "NUMBER"
-      },
-      "validations": {
-        "min": 1,
-        "max": 5
       }
     },
     {
-      "key": "brew_methods",
+      "key": "origin",
       "namespace": "custom",
-      "name": "Brew Methods",
-      "description": "Suitable brewing methods.",
+      "name": "Origin",
+      "description": "",
       "type": {
-        "name": "list.single_line_text_field",
+        "name": "single_line_text_field",
         "category": "TEXT"
-      },
-      "validations": {
-        "enum": [
-          "Phin",
-          "Moka pot",
-          "Espresso",
-          "Cold Brew",
-          "French Press",
-          "Clever Dripper",
-          "AeroPress",
-          "Batch Brew",
-          "Pour-over",
-          "Flash brew",
-          "Turkish"
-        ]
+      }
+    },
+    {
+      "key": "product_tagline",
+      "namespace": "custom",
+      "name": "Tagline",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     }
   ],
