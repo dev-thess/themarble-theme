@@ -237,3 +237,25 @@ button[data-toggle="modal"] {
   line-height: 1.5;
   color: var(--black);
 }
+
+/* Mobile logo size adjustment */
+@media only screen and (max-width: 767px) {
+  .theme-logo img {
+    max-width: 70px !important;
+    width: 70px !important;
+  }
+  
+  /* Adjust header bottom padding for better spacing on mobile */
+  .header-bottom {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+}
+
+/* Smaller devices like phones */
+@media only screen and (max-width: 480px) {
+  .theme-logo img {
+    max-width: 60px !important;
+    width: 60px !important;
+  }
+}
