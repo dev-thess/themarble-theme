@@ -87,6 +87,7 @@
       {%- assign protitlecount = settings.prodtitleword -%}
       {%- if settings.prod_title_enable -%}
       <h3 class="popup_cart_title">  <a href="{{ product.url | within: collection }}">{{ product.title | truncatewords: protitlecount, "" }}</a></h3>
+      {% render 'product-tagline' | product: product %}
       {%- endif -%}
       {%- if settings.product_cart_action_enable -%}
       <div class="product-cart-action">

@@ -111,6 +111,7 @@
                 <div class="shop-product__title">
                   {% render 'product-line', product: product %}
                   <h2 id="popup_cart_title">{{ product.title }}</h2>
+                  {% render 'product-tagline' %}
                 </div>
                 {%- when "price" -%}
                 <div class="shop-product__price">

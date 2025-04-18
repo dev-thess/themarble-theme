@@ -3,7 +3,7 @@
 {% endcomment %}
 {% assign tagline = product.metafields.custom.product_tagline %}
 {% if tagline and tagline != blank %}
-  <div class="product‑tagline">
-    {{ tagline.value }}
+  <div class="product-tagline">
+    <span>{{ tagline.value }}</span>
   </div>
 {% endif %}
