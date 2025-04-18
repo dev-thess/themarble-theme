@@ -1,8 +1,3 @@
-{%- comment -%}
-  Look through **this product’s** collections, find the first one
-  whose `custom.is_product_line` metafield is true, then render it.
-{%- endcomment -%}
-
 {%- assign line_collection = null -%}
 {% for coll in product.collections %}
   {% if coll.metafields.custom.is_product_line.value == true %}
@@ -14,9 +9,16 @@
 {% if line_collection %}
   <div class="product-line">
     {% assign icon = line_collection.metafields.custom.product_line_icon %}
-    {% if icon and icon.value %}
-      <img src="{{ icon | file_url }}" alt="{{ line_collection.title }}"
-      >
+    {% if icon %}
+      {% if icon.value != blank %}
+        {% if icon.type == 'file_reference' %}
+          <div class="product-line-icon">
+            <img src="{{ icon | file_url }}" alt="{{ line_collection.title }}" class="product-line-svg">
+          </div>
+        {% else %}
+          <div class="product-line-icon">{{ icon.value }}</div>
+        {% endif %}
+      {% endif %}
     {% endif %}
     <span>{{ line_collection.title }}</span>
   </div>

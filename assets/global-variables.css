@@ -29,8 +29,24 @@
   --supp-ember-07: #DDA846;
 
   --white: #FFFFFF;
-  --black: #000000;
+  --black: #2b2b2b;
   --pearl: #FDFFFF;
+
+  --line-dark-01: #00000014;
+  --line-dark-02: #00000029;
+  --line-dark-03: #0000003d;
+  --line-dark-04: #00000052;
+  --line-dark-05: #00000066;
+  --line-dark-06: #0000007a;
+  --line-dark-07: #0000008e;
+
+  --line-light-01: #00000014;
+  --line-light-02: #00000029;
+  --line-light-03: #0000003d;
+  --line-light-04: #00000052;
+  --line-light-05: #00000066;
+  --line-light-06: #0000007a;
+  --line-light-07: #0000008e;
 
   --goldenrod-shadow: 0px 8px 10px #866d3194;
 }

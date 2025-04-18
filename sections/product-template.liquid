@@ -147,7 +147,7 @@
                 </div>
                 {%- endif -%} 
                 {% if product.metafields.custom.product-short_description != blank %}
-                  <div class="shop‑product__full‑desc mb‑30 rte">
+                  <div class="shop-product__short-desc mb-30 rte">
                     <p>{{ product.metafields.custom.product-short_description | metafield_tag }}</p>
                   </div>
                 {% endif %}
@@ -170,40 +170,7 @@
                 {%- endunless -%}
                 {%- when "additonal_info" -%}
                 
-                {%- if block.settings.size_guide_enable or block.settings.shipping_guide_enable or block.settings.ask_product_enable -%}
-                <div class="product_additional_information">
-                  
-                  {%- if block.settings.size_guide_enable -%}
-                  {%- if block.settings.product_size_gudie == "metafield" and productSizeGuideHandler != blank -%} 
-                  <button type="button" data-toggle="modal" data-target="#size_guide">
-                    <i class="ti-ruler"></i> {{ block.settings.size_guide | default: 'Size Guide' }}
-                  </button>
-                  {%- elsif block.settings.product_size_gudie == "global" -%}
-                  <button type="button" data-toggle="modal" data-target="#size_guide">
-                    <i class="ti-ruler"></i> {{ block.settings.size_guide | default: 'Size Guide' }}
-                  </button>
-                  {%- endif -%}
-                  {%- endif -%}
-
-                  {%- if block.settings.shipping_guide_enable -%}
-                  {%- if block.settings.product_shipping_policy == "metafield" and productShippingPolicy != blank -%} 
-                  <button type="button" data-toggle="modal" data-target="#shipping_policy">
-                    <i class="ti-truck"></i> {{ block.settings.shipping_guide | default: 'Shipping' }}
-                  </button>
-                  {%- elsif block.settings.product_shipping_policy == "global" -%}
-                  <button type="button" data-toggle="modal" data-target="#shipping_policy">
-                    <i class="ti-truck"></i> {{ block.settings.shipping_guide | default: 'Shipping' }}
-                  </button>
-                  {%- endif -%}
-                  {%- endif -%}
-
-                  {%- if block.settings.ask_product_enable -%}
-                  <button type="button" data-toggle="modal" data-target="#ask_about_product">
-                    <i class="ti-email"></i>{{ block.settings.ask_about_product | default: 'Ask About This product' }}
-                  </button>
-                  {%- endif -%}
-                </div>
-                {%- endif -%}
+                
                 
                 {%- when "quantity_buy_button" -%}    
                 {%- if affiliateProduct != blank -%}
@@ -273,25 +240,41 @@
                   }
                 </style>
 				        {%- endif -%}
-                {%- when 'guaranteed_safe_checkout' -%}
-                {%- if block.settings.payment_option_enable -%}
-                <div class="custom-payment-options mb-30">
-                  {%- if block.settings.payment_information != '' -%}
-                  <div>
-                    {{ block.settings.payment_information }}
-                  </div>
+                {% when "guaranteed_safe_checkout" %}
+                  {%- if block.settings.payment_option_enable -%}
+                    <div class="custom-payment-options mb-30">
+                      {%- if block.settings.payment_information != '' -%}
+                        <div>
+                          {{ block.settings.payment_information }}
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.payment_image -%}
+                        <div class="safe_card_img">
+                          <img src="{{ block.settings.payment_image | img_url: '1024x1024' }}" alt="{{ block.settings.payment_image.alt }}">
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.payment_icon_enable -%}
+                        {%- render 'payment-icon' -%}
+                      {%- endif -%}
+                    </div>
+                    {% assign info_block = section.blocks | where: "type", "additonal_info" | first %}
+                    {% if info_block %}
+                      <div class="product_additional_information mt-20">
+                        {%- if info_block.settings.shipping_guide_enable -%}
+                          <button type="button" data-toggle="modal" data-target="#shipping_policy">
+                            <i class="ti-truck"></i>
+                            {{ info_block.settings.shipping_guide }}
+                          </button>
+                        {%- endif -%}
+                        {%- if info_block.settings.ask_product_enable -%}
+                          <button type="button" data-toggle="modal" data-target="#ask_about_product">
+                            <i class="ti-email"></i>
+                            {{ info_block.settings.ask_about_product }}
+                          </button>
+                        {%- endif -%}
+                      </div>
+                    {% endif %}
                   {%- endif -%}
-                  {%- if block.settings.payment_image -%}
-                  <div class="safe_card_img">
-                    <img src="{{ block.settings.payment_image | img_url: '1024x1024' }}" alt="{{ block.settings.payment_image.alt }}">
-                  </div>
-                  {%- endif -%}
-
-                  {%- if block.settings.payment_icon_enable -%}
-                  {%- render 'payment-icon' -%}
-                  {%- endif -%}
-                </div>
-                {%- endif -%}
                 {%- when "accordion" -%}
                 <div class="product__accordion accordion">
                   <details>

@@ -197,14 +197,6 @@
       </div>
     </div>
     
-<!--     <input class="test__add_qty" id="" type="number" value="1" /> -->
-
-    {%- if product.variants.size > 1 and settings.product_variants_show and settings.mobile_product_variant_show -%}
-    <div class="single-product__variations mobile__view d-lg-none">
-      {%- render 'product-size-variant' with product as product -%}
-      {%- render 'product-color-variant' with product as product -%}
-    </div>
-    {%- endif -%}
 
     {%- if productShortDescription != blank -%}
     <div class="product-description">

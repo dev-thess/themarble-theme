@@ -1,6 +1,3 @@
-{% comment %}
-  Renders the one‑line “tagline” metafield if it exists
-{% endcomment %}
 {% assign tagline = product.metafields.custom.product_tagline %}
 {% if tagline and tagline != blank %}
   <div class="product-tagline">
