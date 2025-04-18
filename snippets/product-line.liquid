@@ -7,16 +7,23 @@
 {% endfor %}
 
 {% if line_collection %}
-  <div class="product-line">
-    {% assign icon = line_collection.metafields.custom.product_line_icon %}
+  {% assign badge_bg = line_collection.metafields.custom.badge_bg_color.value %}
+  {% assign badge_color = line_collection.metafields.custom.badge_text_icon_color.value %}
+  {% assign icon = line_collection.metafields.custom.product_line_icon %}
+
+  <div class="product-line"
+    style="background-color: {{ badge_bg }}; color: {{ badge_color }};">
+    
     {% if icon %}
       {% if icon.value != blank %}
         {% if icon.type == 'file_reference' %}
           <div class="product-line-icon">
-            <img src="{{ icon | file_url }}" alt="{{ line_collection.title }}" class="product-line-svg">
+            <div class="product-line-svg-wrapper" style="background-color: {{ badge_color }}; -webkit-mask-image: url({{ icon | file_url }}); mask-image: url({{ icon | file_url }});"></div>
           </div>
         {% else %}
-          <div class="product-line-icon">{{ icon.value }}</div>
+          <div class="product-line-icon" style="color: {{ badge_color }};">
+            {{ icon.value }}
+          </div>
         {% endif %}
       {% endif %}
     {% endif %}
