@@ -3,10 +3,20 @@
   "blog": [],
   "collection": [
     {
+      "key": "is_product_line",
+      "namespace": "custom",
+      "name": "Is Product Line?",
+      "description": "Used to determine if this collection is a product line.",
+      "type": {
+        "name": "boolean",
+        "category": "BOOLEAN"
+      }
+    },
+    {
       "key": "product_line_icon",
       "namespace": "custom",
-      "name": "Product line icon",
-      "description": "",
+      "name": "Product Line Icon",
+      "description": "Icon representing the product line",
       "type": {
         "name": "file_reference",
         "category": "REFERENCE"
@@ -23,11 +33,130 @@
     {
       "key": "product_line",
       "namespace": "custom",
-      "name": "Product line",
-      "description": "Used to define which product line a coffee belongs to.",
+      "name": "Product Line",
+      "description": "Which product line a coffee belongs to.",
       "type": {
         "name": "list.single_line_text_field",
         "category": "TEXT"
+      },
+      "validations": {
+        "enum": ["Focus", "Relax"]
+      }
+    },
+    {
+      "key": "roast_level",
+      "namespace": "custom",
+      "name": "Roast Level",
+      "description": "Roast level of this blend.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "validations": {
+        "enum": ["Light", "Medium", "Dark"]
+      }
+    },
+    {
+      "key": "origin",
+      "namespace": "custom",
+      "name": "Origin",
+      "description": "Coffee bean origin (e.g., Đắk Nông, Lâm Đồng).",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "aroma",
+      "namespace": "custom",
+      "name": "Aroma",
+      "description": "Aroma description.",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "validations": {
+        "enum": [
+          {
+            "value": "Moderate",
+            "label": "Moderate (3)"
+          },
+          {
+            "value": "Rich",
+            "label": "Rich (4)"
+          },
+          {
+            "value": "Intense",
+            "label": "Intense (5)"
+          }
+        ]
+      }
+    },
+    {
+      "key": "acidity",
+      "namespace": "custom",
+      "name": "Acidity",
+      "description": "Acidity level from 1 to 5.",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      },
+      "validations": {
+        "min": 1,
+        "max": 5
+      }
+    },
+    {
+      "key": "body",
+      "namespace": "custom",
+      "name": "Body",
+      "description": "Body level from 1 to 5.",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      },
+      "validations": {
+        "min": 1,
+        "max": 5
+      }
+    },
+    {
+      "key": "aftertaste",
+      "namespace": "custom",
+      "name": "Aftertaste",
+      "description": "Aftertaste level from 1 to 5.",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      },
+      "validations": {
+        "min": 1,
+        "max": 5
+      }
+    },
+    {
+      "key": "brew_methods",
+      "namespace": "custom",
+      "name": "Brew Methods",
+      "description": "Suitable brewing methods.",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      },
+      "validations": {
+        "enum": [
+          "Phin",
+          "Moka pot",
+          "Espresso",
+          "Cold Brew",
+          "French Press",
+          "Clever Dripper",
+          "AeroPress",
+          "Batch Brew",
+          "Pour-over",
+          "Flash brew",
+          "Turkish"
+        ]
       }
     }
   ],

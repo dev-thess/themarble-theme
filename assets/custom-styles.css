@@ -120,3 +120,11 @@ button[data-toggle="modal"] {
 .single-product__content { 
   padding: 0px 12px;
 }
+
+.header-bottom .site-nav a{
+  font-size: 14px;
+}
+
+.header-bottom .site-nav a:hover{
+  color: var(--goldenrod);
+}

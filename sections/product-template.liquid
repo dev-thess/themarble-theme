@@ -109,6 +109,7 @@
                 </div>
                 {%- when "title" -%}
                 <div class="shop-product__title">
+                  {% render 'product-line', product: product %}
                   <h2 id="popup_cart_title">{{ product.title }}</h2>
                 </div>
                 {%- when "price" -%}
@@ -144,9 +145,9 @@
                   <span class="inventory-title">{{ block.settings.varinat_inventory_stock_title }} </span> <span class="variant-inventory">{{ current_variant.inventory_quantity }}{{ 'products.product.in_stock' | t }}</span>
                 </div>
                 {%- endif -%} 
-                {% if product.description != blank %}
-                  <div class="shop-product__full-desc mb-30 rte">
-                    {{ product.description }}
+                {% if product.metafields.custom.product-short_description != blank %}
+                  <div class="shop‑product__full‑desc mb‑30 rte">
+                    <p>{{ product.metafields.custom.product-short_description | metafield_tag }}</p>
                   </div>
                 {% endif %}
                 
