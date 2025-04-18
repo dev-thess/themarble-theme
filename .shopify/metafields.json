@@ -21,6 +21,26 @@
         "name": "boolean",
         "category": "TRUE_FALSE"
       }
+    },
+    {
+      "key": "badge_bg_color",
+      "namespace": "custom",
+      "name": "Badge bg color",
+      "description": "",
+      "type": {
+        "name": "color",
+        "category": "COLOR"
+      }
+    },
+    {
+      "key": "badge_text_icon_color",
+      "namespace": "custom",
+      "name": "Badge text/icon color",
+      "description": "",
+      "type": {
+        "name": "color",
+        "category": "COLOR"
+      }
     }
   ],
   "company": [],
