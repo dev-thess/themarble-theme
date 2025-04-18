@@ -144,15 +144,11 @@
                   <span class="inventory-title">{{ block.settings.varinat_inventory_stock_title }} </span> <span class="variant-inventory">{{ current_variant.inventory_quantity }}{{ 'products.product.in_stock' | t }}</span>
                 </div>
                 {%- endif -%} 
-                {%- when "description" -%}
-                {%- if block.settings.productdesc == "shortdesc" and productShortDescription != blank -%}
-                <div class="shop-product__short-desc mb-30">
-                  {{ productShortDescription }}
-                </div>
-                {%- elsif block.settings.productdesc == "fulldesc" and product.description != blank -%}
-                {%- assign truncatewords_count = block.settings.truncatewords_count_handle -%}
-                {{ product.description | truncatewords: truncatewords_count, "" }}
-                {%- endif -%}
+                {% if product.description != blank %}
+                  <div class="shop-product__full-desc mb-30 rte">
+                    {{ product.description }}
+                  </div>
+                {% endif %}
                 
                 {%- when 'countdown' -%}
                 {%- assign cdownMeta = productCountdown | date: '%s' -%}
@@ -274,7 +270,7 @@
                     color: {{ block.settings.buy_btn_hover_text_color }};
                   }
                 </style>
-				{%- endif -%}
+				        {%- endif -%}
                 {%- when 'guaranteed_safe_checkout' -%}
                 {%- if block.settings.payment_option_enable -%}
                 <div class="custom-payment-options mb-30">
@@ -374,7 +370,7 @@
                 {%- endcase -%}
                 {%- endfor -%}
                  </div>
-              {% endform %}  
+                {% endform %}  
               
             </div>
             {% if section.settings.product_sidebar_enable %}
@@ -382,6 +378,8 @@
                	 {%- render 'collection-sidebar' -%}
              </div>
           	{% endif %}
+            
+
           </div>
         </div>
         <!--=======  End of shop product content  =======-->
@@ -389,6 +387,7 @@
     </div>
   </div>
 </div>
+
 {% endcapture %}
 {{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
 
