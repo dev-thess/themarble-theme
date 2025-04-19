@@ -310,3 +310,9 @@ header .container {
 .single-product .product-cart-action {
   display: none !important;
 }
+
+@media only screen and (max-width: 479px) {
+  .theme-logo img {
+      max-width: 70px !important;
+  }
+}
