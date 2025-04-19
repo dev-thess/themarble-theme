@@ -179,18 +179,16 @@
                 </div>
                 {%- else -%}
                 
-                {%- if block.settings.quantity_enable -%}
                 <div class="shop-product__block shop-product__block--quantity mb-40">
                   <div class="shop-product__block__title">{{ 'products.product.quantity' | t }}: </div>
                   <div class="shop-product__block__value">
-                    <div class="pro-qty d-inline-block mx-0 pt-0">
-                      <span class="dec">-</span>
-                      <input type="text" name="quantity"  value="1" totalqty="{{ current_variant.inventory_quantity }}">
-                      <span class="inc">+</span>
+                    <div style="display: flex; border: 1px solid #ddd; width: 120px; height: 45px; align-items: center;">
+                      <button type="button" onclick="if(document.getElementById('qty-input').value > 1) {document.getElementById('qty-input').value = parseInt(document.getElementById('qty-input').value) - 1; updateCartPrice();}" style="width: 35px; height: 100%; border: none; background: none; cursor: pointer; font-size: 20px;">-</button>
+                      <input type="text" name="quantity" id="qty-input" value="1" style="flex: 1; border: none; text-align: center; width: 50px;">
+                      <button type="button" onclick="document.getElementById('qty-input').value = Math.min(parseInt(document.getElementById('qty-input').value) + 1, 50); updateCartPrice();" style="width: 35px; height: 100%; border: none; background: none; cursor: pointer; font-size: 20px;">+</button>
                     </div>
                   </div>
                 </div>
-                {%- endif -%}
 
                 <div class="shop-product__buttons {% if section.settings.sticky_product_enable %}sticky__pro_button{% endif %}">
 
@@ -453,6 +451,57 @@
     padding: 0 10px;
     border-radius: 15px;
     margin-left: 10px
+  }
+  /* Quantity Button Styles */
+  .cart-plus-minus {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    width: 110px;
+    height: 45px;
+  }
+  .cart-plus-minus-box {
+    border: none;
+    background: transparent;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    margin: 0 5px;
+  }
+  .cart-plus-minus .qtybutton {
+    border: none;
+    background: none;
+    width: 35px;
+    height: 100%;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cart-plus-minus .qtybutton:hover {
+    background-color: #f5f5f5;
+  }
+  .cart-plus-minus .qtybutton:focus {
+    outline: none;
+  }
+  /* Cart Button Price Display */
+  .cart-price-display {
+    margin-left: 10px;
+    font-weight: 600;
+    position: relative;
+    top: 1px;
+  }
+  #AddToCart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #AddToCart span {
+    display: flex;
+    align-items: center;
   }
   {%- unless section.settings.vertical_mb_gallery -%}
   @media only screen and (max-width: 575px) {
@@ -1628,3 +1677,115 @@
 
 </script>
 {%- endunless -%}
+
+<script>
+// Global price data for all variants
+var variantPrices = {
+  {% for variant in product.variants %}
+    "{{ variant.id }}": {{ variant.price }},
+  {% endfor %}
+};
+
+// Current variant ID
+var currentVariantId = {{ current_variant.id }};
+
+// Format money according to Shopify's format
+function formatMoney(cents) {
+  var moneyFormat = "{{ shop.money_format }}";
+  function defaultTo(value, defaultValue) {
+    return (typeof value === 'undefined' || value === null) ? defaultValue : value;
+  }
+  
+  if (typeof cents == 'string') { cents = cents.replace('.',''); }
+  
+  function formatWithDelimiters(number, precision, thousands, decimal) {
+    precision = defaultTo(precision, 2);
+    thousands = defaultTo(thousands, ',');
+    decimal = defaultTo(decimal, '.');
+    
+    if (isNaN(number) || number == null) { return 0; }
+    
+    number = (number/100.0).toFixed(precision);
+    
+    var parts = number.split('.');
+    var dollarsAmount = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands);
+    var centsAmount = parts[1] ? (decimal + parts[1]) : '';
+    
+    return dollarsAmount + centsAmount;
+  }
+  
+  var value = '';
+  var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+  
+  switch(moneyFormat.match(placeholderRegex)[1]) {
+    case 'amount':
+      value = formatWithDelimiters(cents, 2);
+      break;
+    case 'amount_no_decimals':
+      value = formatWithDelimiters(cents, 0);
+      break;
+    case 'amount_with_comma_separator':
+      value = formatWithDelimiters(cents, 2, '.', ',');
+      break;
+    case 'amount_no_decimals_with_comma_separator':
+      value = formatWithDelimiters(cents, 0, '.', ',');
+      break;
+    case 'amount_with_apostrophe_separator':
+      value = formatWithDelimiters(cents, 2, "'", '.');
+      break;
+  }
+  
+  return moneyFormat.replace(placeholderRegex, value);
+}
+
+// Update the cart price based on quantity and variant
+function updateCartPrice() {
+  var quantity = parseInt(document.getElementById('qty-input').value) || 1;
+  var variantPrice = variantPrices[currentVariantId];
+  var totalPrice = quantity * variantPrice;
+  
+  // Update price in cart button
+  var cartPriceDisplay = document.getElementById('CartPriceDisplay');
+  if (cartPriceDisplay) {
+    cartPriceDisplay.innerHTML = formatMoney(totalPrice);
+  }
+}
+
+// Listen for variant changes
+document.addEventListener('variantChanged', function(e) {
+  if (e.detail && e.detail[0]) {
+    currentVariantId = e.detail[0].id;
+    updateCartPrice();
+  }
+});
+
+// Add variant change event to selectCallback
+var originalSelectCallback = selectCallback;
+selectCallback = function(variant, selector) {
+  // Call the original callback
+  originalSelectCallback(variant, selector);
+  
+  // Update the current variant ID and cart price
+  if (variant) {
+    currentVariantId = variant.id;
+    updateCartPrice();
+    
+    // Dispatch a custom event for variant change
+    document.dispatchEvent(new CustomEvent('variantChanged', { 
+      detail: [variant],
+      bubbles: true 
+    }));
+  }
+};
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  updateCartPrice();
+  
+  // Add change event to quantity input
+  var quantityInput = document.getElementById('qty-input');
+  if (quantityInput) {
+    quantityInput.addEventListener('change', updateCartPrice);
+  }
+});
+</script>

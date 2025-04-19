@@ -4,6 +4,7 @@
   <button type="submit" class="ajax-spin-cart" id="AddToCart">
     <span>
       <span class="cart-title" id="AddToCartText">{{ settings.cart_button_title }}</span>
+      <span class="cart-price-display" id="CartPriceDisplay">{{ current_variant.price | money }}</span>
       <span class="cart-loading">{{ settings.wait_title }}</span>
       <span class="cart-added">{{ settings.added_title }}</span>
       <span class="cart-unavailable">{{ settings.unavailable_title }}</span>
@@ -17,6 +18,7 @@
       {%- else -%}
       <span class="cart-title" id="AddToCartText">{{ settings.cart_button_title }}</span>
       {%- endif -%}
+      <span class="cart-price-display" id="CartPriceDisplay">{{ current_variant.price | money }}</span>
     </span>
   </button>
   {% endif %}
