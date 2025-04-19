@@ -236,3 +236,28 @@ button[data-toggle="modal"] {
   line-height: 1.5;
   color: var(--black);
 }
+
+/* Quantity and Add to Cart Layout */
+.shop-product__block--quantity {
+  margin-bottom: 30px;
+}
+
+/* Mobile responsiveness */
+@media only screen and (max-width: 767px) {
+  .shop-product__block--quantity > div {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .shop-product__block--quantity .product-cart-action {
+    width: 100%;
+  }
+  
+  .cart-button {
+    width: 100%;
+  }
+  
+  .product_inner_wishlist {
+    margin-top: 10px;
+  }
+}

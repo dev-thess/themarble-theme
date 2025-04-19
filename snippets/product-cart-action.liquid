@@ -1,9 +1,10 @@
 <div class="product-cart-action">
   {% if product.available %}
   {% if settings.product_cart_type == 'ajax_spin_cart' %}
-  <button type="submit" class="ajax-spin-cart" id="AddToCart">
+  <button type="submit" class="ajax-spin-cart cart-button" id="AddToCart" style="background-color: #4a4a4a; color: white; padding: 12px 20px; border: none; height: 45px; min-width: 200px; text-transform: uppercase; font-size: 14px; font-weight: 500;">
     <span>
       <span class="cart-title" id="AddToCartText">{{ settings.cart_button_title }}</span>
+      <span style="margin: 0 5px;">|</span>
       <span class="cart-price-display" id="CartPriceDisplay">{{ current_variant.price | money }}</span>
       <span class="cart-loading">{{ settings.wait_title }}</span>
       <span class="cart-added">{{ settings.added_title }}</span>
@@ -11,13 +12,14 @@
     </span>
   </button>
   {% elsif settings.product_cart_type == 'ajax_popup_cart' or settings.product_cart_type == 'without_ajax_cart' %}
-  <button type="submit" class="" id="AddToCart">
+  <button type="submit" class="cart-button" id="AddToCart" style="background-color: #4a4a4a; color: white; padding: 12px 20px; border: none; height: 45px; min-width: 200px; text-transform: uppercase; font-size: 14px; font-weight: 500;">
     <span>
       {% if current_variant.inventory_policy == "continue" and current_variant.inventory_quantity <= 0 %}
       <span class="cart-title" id="AddToCartText">{{ settings.preorder_button_title }}</span>
       {%- else -%}
       <span class="cart-title" id="AddToCartText">{{ settings.cart_button_title }}</span>
       {%- endif -%}
+      <span style="margin: 0 5px;">|</span>
       <span class="cart-price-display" id="CartPriceDisplay">{{ current_variant.price | money }}</span>
     </span>
   </button>
@@ -27,12 +29,27 @@
     jQuery('#AddToCart').click(function(e) {
       e.preventDefault();
       Shopify.addItemFromFormStart('AddToCartForm', {{ product.id }});
-     }); 
+    }); 
   </script>
   {% endunless %}
   {% else %}
-  <button class="cart-disable" type="button">
+  <button class="cart-disable" type="button" style="background-color: #aaaaaa; color: white; padding: 12px 20px; border: none; height: 45px; min-width: 200px;">
     <span class="cart-text">{{ settings.out_of_stock }}</span>
   </button>
   {% endif %}
 </div>
+
+<script>
+  // Update the cart price based on quantity and variant
+  function updateCartPrice() {
+    var quantity = parseInt(document.getElementById('qty-input').value) || 1;
+    var variantPrice = {{ current_variant.price }};
+    var totalPrice = quantity * variantPrice;
+    
+    // Update price in cart button
+    var cartPriceDisplay = document.getElementById('CartPriceDisplay');
+    if (cartPriceDisplay) {
+      cartPriceDisplay.innerHTML = Shopify.formatMoney(totalPrice, "{{ shop.money_format }}");
+    }
+  }
+</script>

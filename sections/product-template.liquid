@@ -179,28 +179,27 @@
                 </div>
                 {%- else -%}
                 
-                <div class="shop-product__block shop-product__block--quantity mb-40">
-                  <div class="shop-product__block__title">{{ 'products.product.quantity' | t }}: </div>
-                  <div class="shop-product__block__value">
+                <div class="shop-product__block--quantity mb-20">
+                  <!-- Quantity and add to cart in the same row -->
+                  <div style="display: flex; align-items: center; gap: 15px;">
+                    <!-- Quantity input -->
                     <div style="display: flex; border: 1px solid #ddd; width: 120px; height: 45px; align-items: center;">
                       <button type="button" onclick="if(document.getElementById('qty-input').value > 1) {document.getElementById('qty-input').value = parseInt(document.getElementById('qty-input').value) - 1; updateCartPrice();}" style="width: 35px; height: 100%; border: none; background: none; cursor: pointer; font-size: 20px;">-</button>
                       <input type="text" name="quantity" id="qty-input" value="1" style="flex: 1; border: none; text-align: center; width: 50px;">
                       <button type="button" onclick="document.getElementById('qty-input').value = Math.min(parseInt(document.getElementById('qty-input').value) + 1, 50); updateCartPrice();" style="width: 35px; height: 100%; border: none; background: none; cursor: pointer; font-size: 20px;">+</button>
                     </div>
+                    
+                    <!-- Add to cart button -->
+                    {%- if block.settings.p_atc_enable -%}
+                    {% render 'product-cart-action', current_variant: current_variant %}
+                    {%- endif -%}
+                    
+                    {%- if settings.wishlist_enable and block.settings.wishlist_enable_product -%}
+                    <div class="product_inner_wishlist">
+                      {%- render 'wishlist-button-3' -%}
+                    </div>
+                    {%- endif -%}
                   </div>
-                </div>
-
-                <div class="shop-product__buttons {% if section.settings.sticky_product_enable %}sticky__pro_button{% endif %}">
-
-                  {%- if block.settings.p_atc_enable -%}
-                  {% render 'product-cart-action', current_variant: current_variant %}
-                  {%- endif -%}
-
-                  {%- if settings.wishlist_enable and block.settings.wishlist_enable_product -%}
-                  <div class="product_inner_wishlist">
-                    {%- render 'wishlist-button-3' -%}
-                  </div>
-                  {%- endif -%}
                 </div>
                 
                 {%- if product.available != true and section.settings.back_to_stock_notify -%}
