@@ -302,3 +302,11 @@ header .container {
 .header-right-container {
   flex-shrink: 0;
 }
+
+.single-product .single-product__variations {
+  display: none !important;
+}
+
+.single-product .product-cart-action {
+  display: none !important;
+}
