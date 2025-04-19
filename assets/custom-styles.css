@@ -261,3 +261,44 @@ button[data-toggle="modal"] {
     margin-top: 10px;
   }
 }
+
+/* Widen header container to prevent menu wrapping */
+header .container {
+  max-width: 100% !important;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/* Prevent menu items from wrapping to a new line */
+.header-bottom-navigation {
+  flex: 1;
+}
+
+.site-nav > ul {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.site-nav > ul > li {
+  white-space: nowrap;
+}
+
+/* Adjust spacing between menu items */
+.site-nav > ul > li > a {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/* Ensure menu has enough space */
+.header-bottom-container {
+  justify-content: space-between !important;
+}
+
+.logo-with-offcanvas {
+  flex-shrink: 0;
+}
+
+.header-right-container {
+  flex-shrink: 0;
+}
