@@ -114,6 +114,32 @@
                   {% render 'product-tagline' %}
                 </div>
                 {%- when "price" -%}
+                <div class="shop-product__price">
+                  <div class="product_price__box d-flex align-items-center">
+                    {%- if product.compare_at_price_max > product.price -%}
+                    <span class="main-price discounted" id="ComparePrice">{{ current_variant.compare_at_price | money }}</span>
+                    {%- endif -%}
+                    <span class="discounted-price" id="ProductPrice">{{ current_variant.price | money }}</span>
+
+                    {%- if on_sale and settings.sale_percent_enable -%}
+                    <p class="onsale save__price_box">{{ block.settings.save_discount_text }} -<span class="sale__save--percent">{{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price | money_without_currency | replace: ',', '.' | times: 100 | remove: '.0'}} </span>%</p>
+                    {%- endif -%}
+                  </div>
+
+                  <small class="unit_price_box caption {% if available == false or current_variant.unit_price_measurement == nil %} hidden{% endif %}">
+                    <dd>
+                      <span id="product__unit_price">{{- current_variant.unit_price | money -}}</span>
+                      <span aria-hidden="true">/</span>
+                      <span id="product__unit_price_value">
+                        {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+                        {{- current_variant.unit_price_measurement.reference_value -}}
+                        {%- endif -%}
+
+                        {{ current_variant.unit_price_measurement.reference_unit }}
+                      </span>
+                    </dd>
+                  </small>
+                </div>
                 {%- when 'stock_availability' -%}
                 {%- if current_variant.inventory_management == "shopify" -%}
                 <div class="product-variant-inventory">
@@ -214,6 +240,41 @@
                   }
                 </style>
 				        {%- endif -%}
+                {% when "guaranteed_safe_checkout" %}
+                  {%- if block.settings.payment_option_enable -%}
+                    <div class="custom-payment-options mb-30">
+                      {%- if block.settings.payment_information != '' -%}
+                        <div>
+                          {{ block.settings.payment_information }}
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.payment_image -%}
+                        <div class="safe_card_img">
+                          <img src="{{ block.settings.payment_image | img_url: '1024x1024' }}" alt="{{ block.settings.payment_image.alt }}">
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.payment_icon_enable -%}
+                        {%- render 'payment-icon' -%}
+                      {%- endif -%}
+                    </div>
+                    {% assign info_block = section.blocks | where: "type", "additonal_info" | first %}
+                    {% if info_block %}
+                      <div class="product_additional_information mt-20">
+                        {%- if info_block.settings.shipping_guide_enable -%}
+                          <button type="button" data-toggle="modal" data-target="#shipping_policy">
+                            <i class="ti-truck"></i>
+                            {{ info_block.settings.shipping_guide }}
+                          </button>
+                        {%- endif -%}
+                        {%- if info_block.settings.ask_product_enable -%}
+                          <button type="button" data-toggle="modal" data-target="#ask_about_product">
+                            <i class="ti-email"></i>
+                            {{ info_block.settings.ask_about_product }}
+                          </button>
+                        {%- endif -%}
+                      </div>
+                    {% endif %}
+                  {%- endif -%}
                 {%- when "accordion" -%}
                 <div class="product__accordion accordion">
                   <details>
@@ -294,8 +355,7 @@
                 {%- endcase -%}
                 {%- endfor -%}
                  </div>
-                {% endform %}  
-              
+                {% endform %}
             </div>
             {% if section.settings.product_sidebar_enable %}
              <div class="col-xl-3 col-lg-3">
@@ -313,6 +373,7 @@
 </div>
 
 {% endcapture %}
+
 {{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
 
 {%- render 'page_spacing' -%}
@@ -1406,10 +1467,6 @@
     var addToCartBtn = $('#AddToCart');
     if(variant){
       //console.log(variant);
-      
-      // Update the price in the Add to Cart button
-      var formattedPrice = Shopify.formatMoney(variant.price, "{{ shop.money_format }}");
-      $('.cart-button-price').text(formattedPrice);
       
       if (variant.inventory_management != null) {
         for( variant_id in var_array){

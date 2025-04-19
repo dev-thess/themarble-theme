@@ -63,12 +63,10 @@
       {%- endunless -%}
     </div>
     {%- if product.variants.size > 1 and settings.product_variants_show -%}
-      {% comment %}
     <div class="single-product__variations d-none d-lg-block">
       {%- render 'product-size-variant' with product as product -%}
       {%- render 'product-color-variant' with product as product -%}
     </div>
-    {% endcomment %}
     {%- endif -%}
     
     {%- assign cdownMeta = productCountdown | date: '%s' -%}
