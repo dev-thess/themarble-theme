@@ -181,7 +181,7 @@
                 
                 <div class="shop-product__block--quantity mb-20">
                   <!-- Quantity and add to cart in the same row -->
-                  <div style="display: flex; align-items: center; gap: 15px;">
+                  <div style="display: flex; align-items: start; gap: 15px;">
                     <!-- Quantity input -->
                     <div style="display: flex; border: 1px solid #ddd; width: 120px; height: 45px; align-items: center;">
                       <button type="button" onclick="if(document.getElementById('qty-input').value > 1) {document.getElementById('qty-input').value = parseInt(document.getElementById('qty-input').value) - 1; updateCartPrice();}" style="width: 35px; height: 100%; border: none; background: none; cursor: pointer; font-size: 20px;">-</button>
@@ -193,14 +193,10 @@
                     {%- if block.settings.p_atc_enable -%}
                     {% render 'product-cart-action', current_variant: current_variant %}
                     {%- endif -%}
-                    
-                    {%- if settings.wishlist_enable and block.settings.wishlist_enable_product -%}
-                    <div class="product_inner_wishlist">
-                      {%- render 'wishlist-button-3' -%}
-                    </div>
-                    {%- endif -%}
                   </div>
                 </div>
+                
+                
                 
                 {%- if product.available != true and section.settings.back_to_stock_notify -%}
                 <div class="notify__me--available mb-30 mt-30">
@@ -239,21 +235,6 @@
 				        {%- endif -%}
                 {% when "guaranteed_safe_checkout" %}
                   {%- if block.settings.payment_option_enable -%}
-                    <div class="custom-payment-options mb-30">
-                      {%- if block.settings.payment_information != '' -%}
-                        <div>
-                          {{ block.settings.payment_information }}
-                        </div>
-                      {%- endif -%}
-                      {%- if block.settings.payment_image -%}
-                        <div class="safe_card_img">
-                          <img src="{{ block.settings.payment_image | img_url: '1024x1024' }}" alt="{{ block.settings.payment_image.alt }}">
-                        </div>
-                      {%- endif -%}
-                      {%- if block.settings.payment_icon_enable -%}
-                        {%- render 'payment-icon' -%}
-                      {%- endif -%}
-                    </div>
                     {% assign info_block = section.blocks | where: "type", "additonal_info" | first %}
                     {% if info_block %}
                       <div class="product_additional_information mt-20">
@@ -340,9 +321,21 @@
 
                     {% if block.settings.social_share_enable %}
                     <tr class="single-info">
-                      <td class="quickview-title">{{ block.settings.social_share_title }} </td>
-                      <td class="quickview-value">
-                        {%- render 'social-share-2' -%}
+                      <td class="quickview-value" style="display: flex; align-items: center; justify-content: space-between;">
+                        <!-- Wishlist button at the start -->
+                        {%- if settings.wishlist_enable -%}
+                        <div class="product_inner_wishlist" style="margin: 0;">
+                          {%- render 'wishlist-button-3' -%}
+                        </div>
+                        {%- endif -%}
+                        
+                        <!-- Social share buttons with label at the end -->
+                        <div style="display: flex; align-items: center;">
+                          <span class="quickview-title" style="margin-right: 10px;">{{ block.settings.social_share_title }}</span>
+                          <div class="social-share-container">
+                            {%- render 'social-share-2' -%}
+                          </div>
+                        </div>
                       </td>
                     </tr>
                     {% endif %}
@@ -485,13 +478,6 @@
   }
   .cart-plus-minus .qtybutton:focus {
     outline: none;
-  }
-  /* Cart Button Price Display */
-  .cart-price-display {
-    margin-left: 10px;
-    font-weight: 600;
-    position: relative;
-    top: 1px;
   }
   #AddToCart {
     display: flex;

@@ -1,7 +1,7 @@
 <div class="product-cart-action">
   {% if product.available %}
   {% if settings.product_cart_type == 'ajax_spin_cart' %}
-  <button type="submit" class="ajax-spin-cart cart-button" id="AddToCart" style="background-color: #4a4a4a; color: white; padding: 12px 20px; border: none; height: 45px; min-width: 200px; text-transform: uppercase; font-size: 14px; font-weight: 500;">
+  <button type="submit" class="ajax-spin-cart cart-button" id="AddToCart">
     <span>
       <span class="cart-title" id="AddToCartText">{{ settings.cart_button_title }}</span>
       <span style="margin: 0 5px;">|</span>
@@ -12,18 +12,22 @@
     </span>
   </button>
   {% elsif settings.product_cart_type == 'ajax_popup_cart' or settings.product_cart_type == 'without_ajax_cart' %}
-  <button type="submit" class="cart-button" id="AddToCart" style="background-color: #4a4a4a; color: white; padding: 12px 20px; border: none; height: 45px; min-width: 200px; text-transform: uppercase; font-size: 14px; font-weight: 500;">
+  <button type="submit" class="button cart-button" id="AddToCart">
     <span>
       {% if current_variant.inventory_policy == "continue" and current_variant.inventory_quantity <= 0 %}
       <span class="cart-title" id="AddToCartText">{{ settings.preorder_button_title }}</span>
       {%- else -%}
       <span class="cart-title" id="AddToCartText">{{ settings.cart_button_title }}</span>
       {%- endif -%}
-      <span style="margin: 0 5px;">|</span>
+      <span style="margin: 0 5px;">•</span>
       <span class="cart-price-display" id="CartPriceDisplay">{{ current_variant.price | money }}</span>
     </span>
   </button>
   {% endif %}
+  <!-- Guaranteed safe checkout -->
+  <div style="text-align: center; margin-top: 4px; font-size: 14px; color: #666;">
+    Guaranteed safe checkout hello
+  </div>
   {% unless settings.product_cart_type == 'without_ajax_cart' %}
   <script>
     jQuery('#AddToCart').click(function(e) {
