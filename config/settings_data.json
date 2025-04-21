@@ -44,7 +44,7 @@
     "sale_title": "Sale",
     "soldout_title": "Soldout",
     "sale_percent_enable": true,
-    "product_cart_action_enable": true,
+    "product_cart_action_enable": false,
     "cart_button_title": "Add to cart",
     "select_options": "Select Options",
     "affiliate_cart_button_title": "Buy from amazon",

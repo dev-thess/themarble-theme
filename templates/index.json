@@ -110,7 +110,7 @@
         "items_more_than_992": 3,
         "items_more_than_768": 2,
         "items_more_than_480": 2,
-        "items_more_than_320": 1
+        "items_more_than_320": 2
       }
     },
     "1655887737aafc8b5a": {
@@ -538,7 +538,7 @@
       "settings": {
         "container_width": "container",
         "section_title_enable": false,
-        "section_title": "Section Title",
+        "section_title": "Our products",
         "section_title_paragraph": "Section Title Description",
         "text_align": "center",
         "product_banner_Post": "right",
@@ -548,8 +548,8 @@
         "product_cat_handle_id": "all-product",
         "product_limit_handle": 6,
         "product_column": "4",
-        "product_desktop_col": "6",
-        "product_column_md": "6",
+        "product_desktop_col": "4",
+        "product_column_md": "4",
         "product_column_xs": "6"
       }
     },

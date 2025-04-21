@@ -313,7 +313,7 @@ header .container {
 
 @media only screen and (max-width: 479px) {
   .theme-logo img {
-      max-width: 70px !important;
+      max-width: 48px !important;
   }
 }
 
@@ -366,4 +366,17 @@ header .container {
 
 .product_additional_information button {
   margin-bottom: 0px !important;
+}
+
+@media (max-width: 767px) {
+  .header-box-topbar.is-sticky .header-bottom-container .logo-with-offcanvas {
+      -ms-flex-preferred-size: 100%;
+      flex-basis: initial;
+  }
+}
+
+@media (max-width: 767px) {
+  .header-right-container {
+    display: none;
+  }
 }
