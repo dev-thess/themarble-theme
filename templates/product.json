@@ -167,30 +167,11 @@
           "settings": {
             "tab_title": "Review"
           }
-        },
-        "facbook_comment_9y4ajq": {
-          "type": "facbook_comment",
-          "settings": {
-            "tab_title": "Comment",
-            "product_comments_title": "Comments",
-            "product_page_comments_box": "facebook_comment",
-            "facebook_comments_post_limit": "10",
-            "disqus_shortname": "demo-store"
-          }
-        },
-        "unique_tab_baFVtw": {
-          "type": "unique_tab",
-          "settings": {
-            "tab_title": "Unique Tab",
-            "unique_tab_liquid": "{% render 'judgeme_widgets', widget_type: 'review_widget', concierge_install: false %}"
-          }
         }
       },
       "block_order": [
         "14fd9e92-eae6-4d39-8731-d8a4bfef5fb0",
-        "494b124e-a467-4931-8c5b-aec69ae681e7",
-        "facbook_comment_9y4ajq",
-        "unique_tab_baFVtw"
+        "494b124e-a467-4931-8c5b-aec69ae681e7"
       ],
       "settings": {
         "product_tab_enable": true,
