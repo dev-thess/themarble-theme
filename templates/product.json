@@ -161,18 +161,9 @@
           "settings": {
             "tab_title": "Description"
           }
-        },
-        "494b124e-a467-4931-8c5b-aec69ae681e7": {
-          "type": "product_review",
-          "settings": {
-            "tab_title": "Review"
-          }
         }
       },
-      "block_order": [
-        "14fd9e92-eae6-4d39-8731-d8a4bfef5fb0",
-        "494b124e-a467-4931-8c5b-aec69ae681e7"
-      ],
+      "block_order": ["14fd9e92-eae6-4d39-8731-d8a4bfef5fb0"],
       "settings": {
         "product_tab_enable": true,
         "container_width": "container"
@@ -186,13 +177,12 @@
           "settings": {}
         }
       },
-      "block_order": [
-        "judge_me_reviews_review_widget_jJfX4R"
-      ],
+      "block_order": ["judge_me_reviews_review_widget_jJfX4R"],
       "settings": {}
     },
     "related-product": {
       "type": "related-product",
+      "disabled": true,
       "settings": {
         "related_products_enable": true,
         "container_width": "container",
