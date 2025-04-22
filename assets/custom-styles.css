@@ -173,7 +173,7 @@ button[data-toggle="modal"] {
 .shop-product__title h2 {
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .shop‑product__full‑desc p {
@@ -392,4 +392,24 @@ header .container {
 
 input#qty-input {
   width: 20px !important;
+}
+#judgeme_product_reviews {
+  max-width: 980px;
+  margin: auto;
+}
+
+.tab-content p:not(:has(img)) {
+  max-width: 980px;
+  margin: auto;
+}
+
+.tab-content div:not(:has(img)) {
+  max-width: 980px;
+  margin: auto; 
+}
+
+@media (max-width: 767px) {
+  .essen_tial .site-mobile-nav .dl-trigger, .essen_tial .site-mobile-navigation #mobile-menu-trigger {
+      top: -50px;
+  }
 }
