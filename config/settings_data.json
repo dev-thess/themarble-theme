@@ -42,7 +42,7 @@
     "product_variants_show": true,
     "new_title": "New",
     "sale_title": "Sale",
-    "soldout_title": "Soldout",
+    "soldout_title": "Sold out",
     "sale_percent_enable": true,
     "product_cart_action_enable": false,
     "cart_button_title": "Add to cart",
