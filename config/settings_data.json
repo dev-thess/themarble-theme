@@ -23,6 +23,7 @@
     "favicon": "shopify://shop_images/themarblecoffee-logo-standalone-medium.svg",
     "currency_enable": true,
     "supported_currencies": "USD, USD - US Dollar | EUR, EUR - Euro | GBP, GBP - British Pound | INR, INR - Indian Rupee | BDT, BDT - Bangladesh Taka | JPY, JPY - Japan Yen | CAD, CAD - Canada Dollar | AUD, AUD - Australian Dollar",
+    "predictive_search_show_price": true,
     "pagination_prev": "Prev",
     "pagination_next": "Next",
     "enable_preloader": false,
