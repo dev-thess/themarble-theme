@@ -17,9 +17,9 @@
           "settings": {
             "slider_img": "shopify://shop_images/themarblecoffee-slide-01.png",
             "slider_sm_img": "shopify://shop_images/themarblecoffee-mobile-slide-01.png",
-            "slider_caption_title_1": "The coffee is brewed by first roasting the green coffee beans over hot coals in a brazier. given an opportunity to sample.",
-            "slider_caption_title_2": "A ROASTED COFFEE <br> FOR YOU",
-            "slider_caption_btn": "shop now",
+            "slider_caption_title_1": "Marble roasts awaken moments — so you can begin your day fully, from the very first sip.",
+            "slider_caption_title_2": "Start your day <br> with the simplest thing:<br>a real cup of coffee.",
+            "slider_caption_btn": "Begin now",
             "slider_caption_btn_link": "",
             "row_reverse": false,
             "justify_content": "start",
@@ -46,10 +46,7 @@
       "block_order": [
         "16272984271dd9cdb1-1"
       ],
-      "custom_css": [
-        ".main-title h2 {line-height: 56px;}",
-        ".hero-slider-content > h5 {line-height: 24px;}"
-      ],
+      "custom_css": [],
       "settings": {
         "slider_autoplay_enable": false,
         "slider_content_type": "without_image",
@@ -89,9 +86,9 @@
       "settings": {
         "container_width": "container",
         "section_title_enable": true,
-        "section_title": "Recent Products",
+        "section_title": "PICK YOUR BREW, MATCH YOUR VIBE",
         "section_title_size": "title--small",
-        "section_title_paragraph": "Choose your coffee",
+        "section_title_paragraph": "Focus line fuels your deep work. Relax line slows it all down. Pick your blend, sip your way.",
         "view_more_btn": true,
         "view_more_btn_text": "View all",
         "view_more_btn_url": "shopify://collections/all-product",
@@ -133,10 +130,10 @@
       ],
       "settings": {
         "featured_banner_image": "shopify://shop_images/ChatGPT_Image_Apr_19_2025_12_23_08_PM.png",
-        "featured_banner_sub_title": "New stunning flavor",
-        "featured_banner_title": "Great coffee",
+        "featured_banner_sub_title": "Stunning flavor",
+        "featured_banner_title": "New roast, new vibe",
         "featured_banner_content": "Our coffee bar uses only Ethiopian coffee. All commercially produced coffee originates from Ethiopia. The fruity acidity of this single origin coffee is balanced by its sweet honey notes, creating soft, light notes with a light character. There are people who can’t start their day without having a freshly brewed cup of coffee and we understand them.",
-        "button_title": "Shop Now",
+        "button_title": "Grab a bag",
         "button_url": ""
       }
     },
