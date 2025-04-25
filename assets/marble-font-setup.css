@@ -18,11 +18,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* PRODUCT LINE / LABEL / BUTTONS */
-.btn-label, .product-line, .uppercase-label {
+.btn-label, .product-line, .uppercase-label, .bans-button {
   font-family: 'Montserrat', Arial, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+.product-tagline {
+  font-family: 'Montserrat', Arial, sans-serif;
+  color: #555;
 }
 
 /* CUSTOM CLASS FOR QUOTES OR SUBTEXT */
