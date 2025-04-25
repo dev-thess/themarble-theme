@@ -377,7 +377,7 @@ header .container {
 
 .shop-product__description .shop-product__block--quantity .product-cart-action button {
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 12px;
 }
 
 .product_additional_information button {
@@ -470,4 +470,8 @@ input#qty-input {
   .header-box-topbar .header-bottom-container .logo-with-offcanvas {
       text-align: start;
   }
+}
+
+.shop-product__block--quantity > div {
+  gap: 8px !important;
 }
