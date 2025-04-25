@@ -25,6 +25,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
 }
 
+button {
+  font-family: 'Montserrat', Arial, sans-serif;
+  text-transform: uppercase;
+}
+
 .product-tagline {
   font-family: 'Montserrat', Arial, sans-serif;
   color: #555;
