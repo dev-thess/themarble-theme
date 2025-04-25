@@ -128,13 +128,13 @@
     "dont_show_title_color": "#000000",
     "close_icon_color": "#999999",
     "google_fonts_import": "@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');",
-    "body_text_font": "google_fonts",
-    "body_font_handle": "montserrat_n4",
+    "body_text_font": "shopify_library",
+    "body_font_handle": "merriweather_n4",
     "body_font_family": "'Montserrat', sans-serif",
     "body_font_weight": "400",
     "body_font_style": "normal",
-    "heading_text_font": "google_fonts",
-    "header_font_handle": "montserrat_n4",
+    "heading_text_font": "shopify_library",
+    "header_font_handle": "lora_n4",
     "heading_family": "'Montserrat', sans-serif",
     "heading_weight": "400",
     "heading_style": "normal",
@@ -556,7 +556,10 @@
             }
           }
         },
-        "block_order": ["1538820479755", "1541679836730"],
+        "block_order": [
+          "1538820479755",
+          "1541679836730"
+        ],
         "settings": {
           "container_width": "container",
           "shopbar_enable": true,
@@ -903,7 +906,9 @@
             }
           }
         },
-        "block_order": ["1562233770821"],
+        "block_order": [
+          "1562233770821"
+        ],
         "settings": {
           "container_width": "fluid",
           "header_top_enable": false,
@@ -1094,7 +1099,11 @@
             }
           }
         },
-        "block_order": ["1547275512504", "1547275514912", "1547275517431"],
+        "block_order": [
+          "1547275512504",
+          "1547275514912",
+          "1547275517431"
+        ],
         "settings": {
           "slider_enable": false,
           "rev_arrow_bg_color": "#fff",
@@ -1271,7 +1280,7 @@
           "footer_section_enable": true,
           "footer_bottom_enable": true,
           "copyright_text_enable": true,
-          "copy_right_text": "<p>Copyright © The Marble Coffee All Right Reserved.</p>",
+          "copy_right_text": "<p>Copyright © Bans Shopify All Right Reserved.</p>",
           "copyright_logo_enable": true,
           "payment_icon_enable": true,
           "footer_overlay": false,
@@ -1484,7 +1493,9 @@
             }
           }
         },
-        "block_order": ["1551508412277"],
+        "block_order": [
+          "1551508412277"
+        ],
         "settings": {
           "section_enable": true,
           "container_width": "fluid",
@@ -1623,7 +1634,11 @@
             }
           }
         },
-        "block_order": ["1551430147092", "1551430150228", "1551430527052"],
+        "block_order": [
+          "1551430147092",
+          "1551430150228",
+          "1551430527052"
+        ],
         "settings": {
           "section_enable": true,
           "container_width": "container"
@@ -1665,7 +1680,11 @@
             }
           }
         },
-        "block_order": ["1551432539441", "1551432542100", "1551432550237"],
+        "block_order": [
+          "1551432539441",
+          "1551432542100",
+          "1551432550237"
+        ],
         "settings": {
           "section_enable": true,
           "section_title_enable": true,
@@ -2100,7 +2119,9 @@
             }
           }
         },
-        "block_order": ["1575181884848"],
+        "block_order": [
+          "1575181884848"
+        ],
         "settings": {
           "custom_carousel_product_enable": true,
           "container_width": "container",
@@ -2196,7 +2217,10 @@
             }
           }
         },
-        "block_order": ["1588488022022-0", "1588488022022-1"],
+        "block_order": [
+          "1588488022022-0",
+          "1588488022022-1"
+        ],
         "settings": {
           "slider_autoplay_enable": false,
           "slider_content_type": "without_image",
@@ -2256,7 +2280,11 @@
             }
           }
         },
-        "block_order": ["1588488326122-0", "1588488326122-1", "1588488388956"],
+        "block_order": [
+          "1588488326122-0",
+          "1588488326122-1",
+          "1588488388956"
+        ],
         "settings": {
           "container_width": "container",
           "section_snow_effect": false
@@ -2277,7 +2305,9 @@
             }
           }
         },
-        "block_order": ["28338783-befb-4dea-a101-3a0ddbcad056"],
+        "block_order": [
+          "28338783-befb-4dea-a101-3a0ddbcad056"
+        ],
         "settings": {
           "container_width": "container",
           "section_title_enable": true,
@@ -2346,7 +2376,11 @@
             }
           }
         },
-        "block_order": ["1588588070606-0", "1588588070606-1", "1588590397118"],
+        "block_order": [
+          "1588588070606-0",
+          "1588588070606-1",
+          "1588590397118"
+        ],
         "settings": {
           "container_width": "no_gap",
           "section_snow_effect": false
@@ -2368,7 +2402,9 @@
             }
           }
         },
-        "block_order": ["1588589996137-0"],
+        "block_order": [
+          "1588589996137-0"
+        ],
         "settings": {
           "container_width": "container"
         }
@@ -2527,7 +2563,9 @@
             }
           }
         },
-        "block_order": ["f466e4de-3ec1-4602-ab1c-c58528310fb6"],
+        "block_order": [
+          "f466e4de-3ec1-4602-ab1c-c58528310fb6"
+        ],
         "settings": {
           "container_width": "container",
           "header_top_enable": true,

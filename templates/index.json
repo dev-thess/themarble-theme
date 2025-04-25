@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "slider_img": "shopify://shop_images/themarblecoffee-slide-01.png",
-            "slider_sm_img": "shopify://shop_images/themarblecoffee-banner-01-mobile.png",
+            "slider_sm_img": "shopify://shop_images/themarblecoffee-mobile-slide-01.png",
             "slider_caption_title_1": "The coffee is brewed by first roasting the green coffee beans over hot coals in a brazier. given an opportunity to sample.",
             "slider_caption_title_2": "A ROASTED COFFEE <br> FOR YOU",
             "slider_caption_btn": "shop now",
@@ -90,7 +90,7 @@
         "container_width": "container",
         "section_title_enable": true,
         "section_title": "Recent Products",
-        "section_title_size": "title--medium",
+        "section_title_size": "title--small",
         "section_title_paragraph": "Choose your coffee",
         "view_more_btn": true,
         "view_more_btn_text": "View all",
