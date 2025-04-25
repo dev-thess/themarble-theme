@@ -11,22 +11,24 @@
   {% assign badge_color = line_collection.metafields.custom.badge_text_icon_color.value %}
   {% assign icon = line_collection.metafields.custom.product_line_icon %}
 
-  <div class="product-line"
-    style="background-color: {{ badge_bg }}; color: {{ badge_color }};">
-    
-    {% if icon %}
-      {% if icon.value != blank %}
-        {% if icon.type == 'file_reference' %}
-          <div class="product-line-icon">
-            <div class="product-line-svg-wrapper" style="background-color: {{ badge_color }}; -webkit-mask-image: url({{ icon | file_url }}); mask-image: url({{ icon | file_url }});"></div>
-          </div>
-        {% else %}
-          <div class="product-line-icon" style="color: {{ badge_color }};">
-            {{ icon.value }}
-          </div>
+  <a href="{{ line_collection.url }}" class="product-line-link">
+    <div class="product-line"
+      style="background-color: {{ badge_bg }}; color: {{ badge_color }};">
+      
+      {% if icon %}
+        {% if icon.value != blank %}
+          {% if icon.type == 'file_reference' %}
+            <div class="product-line-icon">
+              <div class="product-line-svg-wrapper" style="background-color: {{ badge_color }}; -webkit-mask-image: url({{ icon | file_url }}); mask-image: url({{ icon | file_url }});"></div>
+            </div>
+          {% else %}
+            <div class="product-line-icon" style="color: {{ badge_color }};">
+              {{ icon.value }}
+            </div>
+          {% endif %}
         {% endif %}
       {% endif %}
-    {% endif %}
-    <span>{{ line_collection.title }}</span>
-  </div>
+      <span>{{ line_collection.title }}</span>
+    </div>
+  </a>
 {% endif %}

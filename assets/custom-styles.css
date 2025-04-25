@@ -148,6 +148,21 @@ button[data-toggle="modal"] {
   letter-spacing: 0.05em;
 }
 
+.product-line-link {
+  text-decoration: none;
+  display: block;
+  position: relative;
+}
+
+.product-line-link:hover .product-line {
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.product-line-link .product-line {
+  cursor: pointer;
+}
+
 .single-product__content {
   text-align: start;
 }
