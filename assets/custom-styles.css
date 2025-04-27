@@ -488,24 +488,24 @@ input#qty-input {
 /* 1. Standardized title sizes mapping */
 .title--large {
   font-family: 'Lora', Georgia, serif;
-  font-size: 3.05rem; /* ~52px */
-  line-height: 1.3;
-  font-weight: 600;
-  color: #003459;
+  font-size: 3.05rem !important; /* ~52px */
+  line-height: 1.3 !important;
+  font-weight: 600 !important;
+  color: #003459 !important;
 }
 
 .title--medium {
   font-family: 'Lora', Georgia, serif;
-  font-size: 2.3rem; /* ~39px */
-  line-height: 1.4;
-  font-weight: 600;
+  font-size: 2.3rem !important; /* ~39px */
+  line-height: 1.4 !important;
+  font-weight: 600 !important;
 }
 
 .title--small {
   font-family: 'Lora', Georgia, serif;
-  font-size: 1.7rem; /* ~29px */
-  line-height: 1.4;
-  font-weight: 600;
+  font-size: 1.7rem !important; /* ~29px */
+  line-height: 1.4 !important;
+  font-weight: 600 !important;
 }
 
 /* 2. For sections that don't have manual title size selection */
