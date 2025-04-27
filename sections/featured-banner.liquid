@@ -20,7 +20,7 @@
           <span class="sub-title">{{ section.settings.featured_banner_sub_title }}</span>
           {%- endif -%}
           {%- if section.settings.featured_banner_title != '' -%}
-          <h2>{{ section.settings.featured_banner_title }}</h2>
+          <h2>{{ {{ section.settings.section_title_size section.settings.featured_banner_title }}</h2>
           {%- endif -%}
           {%- if section.settings.featured_banner_content != '' -%}
           <div class="featured-banner-description">
@@ -51,7 +51,7 @@
   }
 {%- endstyle -%}
 {%- endcapture -%}
-{{ css | strip_newlines | replace: '  ', ''  | replace: ': ', ':' | replace: ' {', '{'
+{{ css | strip_newlines | replace: '  ', '' | replace: ': ', ':' | replace: ' {', '{'
 }}
 
 
