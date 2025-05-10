@@ -20,7 +20,7 @@
           </div>
           <div class="popup-content">
             <p class="total_item"> {{ settings.total_cart_before_title }} <span class="cart_count bigcounter">{{ cart.item_count }}</span> {{ settings.total_cart_after_title }}</p>
-            <p class="cart_total"> <span class="total_price_label">{{ settings.total_price_label }} </span> <span class="shopping-cart__total">{{ cart.total_price | money }}</span></p>
+<!--            <p class="cart_total"> <span class="total_price_label">{{ settings.total_price_label }} </span> <span class="shopping-cart__total">{{ cart.total_price | money }}</span></p> -->
             <div class="modal-button {% if settings.popup_agree_button_enable and settings.agree_button_enable %}disabled{% endif %}">
               
               {%- if settings.continue_shopping_btn_enable -%}
