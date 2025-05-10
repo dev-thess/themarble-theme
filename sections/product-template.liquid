@@ -113,8 +113,9 @@
                   <h2 id="popup_cart_title">{{ product.title }}</h2>
                   {% render 'product-tagline' %}
                 </div>
-                {%- when "price" -%}
-                <div class="shop-product__price">
+                {% assign is_trial = product.metafields.custom.is_trial.value %}
+                {% unless is_trial %}
+                  <div class="shop-product__price">
                   <div class="product_price__box d-flex align-items-center">
                     {%- if product.compare_at_price_max > product.price -%}
                     <span class="main-price discounted" id="ComparePrice">{{ current_variant.compare_at_price | money }}</span>
@@ -140,6 +141,9 @@
                     </dd>
                   </small>
                 </div>
+                {% endunless %}
+                {%- when "price" -%}
+                
                 {%- when 'stock_availability' -%}
                 {%- if current_variant.inventory_management == "shopify" -%}
                 <div class="product-variant-inventory">

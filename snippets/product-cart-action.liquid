@@ -14,6 +14,8 @@
   {% elsif settings.product_cart_type == 'ajax_popup_cart' or settings.product_cart_type == 'without_ajax_cart' %}
   <button type="submit" class="button cart-button" id="AddToCart">
     <span>
+      {% assign is_trial = product.metafields.custom.is_trial.value %}
+      {% if is_trial == false %}
       {% if current_variant.inventory_policy == "continue" and current_variant.inventory_quantity <= 0 %}
       <span class="cart-title" id="AddToCartText">{{ settings.preorder_button_title }}</span>
       {%- else -%}
@@ -21,6 +23,9 @@
       {%- endif -%}
       <span style="margin: 0 5px;">•</span>
       <span class="cart-price-display" id="CartPriceDisplay">{{ current_variant.price | money }}</span>
+      {% else %}
+      <span class="cart-title" id="AddToCartText">TRIAL</span>
+      {% endif %}
     </span>
   </button>
   {% endif %}

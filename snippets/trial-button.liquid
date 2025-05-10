@@ -1,0 +1,14 @@
+{% assign is_trial = product.metafields.custom.is_trial.value %}
+{% if is_trial %}
+  <style>
+    .product__price, .price, .discounted-price, .main-price { display: none !important; }
+  </style>
+  <form action="/checkout" method="post">
+    <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit" class="btn">ĐĂNG KÝ DÙNG THỬ</button>
+  </form>
+{% else %}
+  <span class="product__price">{{ product.price | money }}</span>
+  <button type="submit" class="btn product__add-to-cart">MUA NGAY</button>
+{% endif %} 
